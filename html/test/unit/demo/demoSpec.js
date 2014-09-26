@@ -3,7 +3,6 @@ describe("Unit: Testing adminApp", function() {
     beforeEach(angular.mock.module('adminApp'));
 
     describe("Unit: Testing projectManageCtrl", function() {
-        beforeEach(angular.mock.module('projectModule'));
 
         it('should be return projectManageCtrl', inject(function ($rootScope, $controller, $httpBackend) {
 
@@ -15,12 +14,12 @@ describe("Unit: Testing adminApp", function() {
                     {Id: "1", Name: "程书行"}
                 ]
             };
-
+            $httpBackend.expectGET('/searchDemo').respond(data);
             var scope = $rootScope.$new();
             var ctrl = $controller('projectManageCtrl', {$scope: scope});
-            expect(scope.users).toBe([])
-//            $httpBackend.expectGET('/searchDemo').respond(data);
-//            console.info(scope.users+"11")
+            expect(scope.users).toBe("")
+
+            console.info(scope.users+"11")
 
 //            $httpBackend.flush();
 //        expect(ctrl).not.toBeNull()

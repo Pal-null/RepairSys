@@ -1,7 +1,5 @@
-angular.module('projectModule', [])
-
-    .controller('projectManageCtrl', ["$scope", function($scope) {
-        MenuOnClick(1);
+adminApp.controller('projectManageCtrl', ["$scope", function($scope) {
+        menuOnClick(1);
 //        $scope.users=[{Id:1,Name:"杨振林"},{Id:2,Name:"杨振树"}]
         $scope.addfrom={Name: ""};
         $scope.users="";

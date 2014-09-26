@@ -1,4 +1,4 @@
-angular.module('adminApp', ['ngRoute','projectModule'])
+var adminApp = angular.module('adminApp', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
@@ -13,14 +13,4 @@ angular.module('adminApp', ['ngRoute','projectModule'])
              .otherwise({
                 redirectTo: '/userManage'
             })
-    }])
-
-    .controller('userManageCtrl', ["$scope", function($scope) {
-        MenuOnClick(0);
     }]);
-
-//左边菜单激活状态
-MenuOnClick = function(arg_index) {
-    $('.part a').removeClass('cur');
-    $('.part a').eq(arg_index).addClass('cur');
-};

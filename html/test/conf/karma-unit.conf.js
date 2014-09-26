@@ -13,6 +13,7 @@ module.exports = function(config) {
             'lib/angular/angular-animate.js',
             'lib/jquery-1.11.0.min.js',
             'lib/angular/angular-mocks.js',
+            'lib/global/*.js',
             'js/**/*.js',//源文件
             'test/unit/**/*.js'//测试文件
         ],
