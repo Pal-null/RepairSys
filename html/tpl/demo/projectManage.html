@@ -1,0 +1,76 @@
+<div class="frames-body">
+
+    <div class="columns-of">
+        <div class="bread-crumbs">
+            <div class="link-wrap">
+                <ul>
+                    <li><span>项目管理</span></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+
+    <div class="scroll-wrap" style="top:45px;">
+        <div class="m-pd-w">
+            <!--main-view start-->
+
+            <div class="ic-btn orange style2" onclick="binApp.window(binApp.getId('RepairWin'),{action:'scale',fixed:true},'normal')">添加人员</div>
+            <br>
+            <div class="main-view">
+                <div class="table-bar">
+                    <div class="table-scroll">
+                        <table width="100%" class="tab-s1">
+                            <thead class="tab-hd-s1">
+                            <tr>
+                                <th align="left" height="25"><div class="max260 min100 pd-l30">编号</div></th>
+                                <th align="left" height="25"><div class="max260 min100 pd-l30">姓名</div></th>
+                                <th align="left" height="25"><div class="max260 min100 pd-l30">操作</div></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="user in users">
+                                <td>{{user.Id}}</td>
+                                <td> <input class="text-style" type="text" ng-model="user.Name"  maxlength="4"/></td>
+                                <td>
+                                    <button  class="search-btn" ng-click="deletename(user)"> 删除 </button>
+                                    <button  class="search-btn" ng-click="editename(user)"> 修改 </button>
+                                </td>
+
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <div class="winStyle repair-win" id="RepairWin" >
+                    <div class="binDrag" style="cursor:default;">
+                        <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+                        <div class="win-hd">添加人员</div>
+                        <div class="win-m">
+                            <div class="win-pd-w">
+
+                                <div class="repair-form">
+                                    <ul>
+                                        <li class="part">姓名：　　　<input type="text" class="text" ng-model="addfrom.Name" /></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="win-ft">
+                            <a href="javascript:;" class="ic-btn orange mg-r5 close" ng-click="addname()">确认</a>
+                            <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--main-view end-->
+        </div>
+    </div>
+
+</div>

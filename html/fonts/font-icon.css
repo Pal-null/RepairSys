@@ -1,0 +1,182 @@
+/** common-icon css @Author bingoo **/
+@font-face {
+    font-family: 'CommonFonts';
+    src: url('font-icon.eot');
+    src: url('font-icon.eot?#iefix') format('embedded-opentype'),
+         url('font-icon.woff') format('woff'),
+         url('font-icon.ttf') format('truetype'),
+         url('font-icon.svg#untitledregular') format('svg');
+	/*src: url('font-icon.ttf') format('truetype');*/
+    font-weight: normal;
+    font-style: normal;
+}
+/* FONT AWESOME CORE
+ * -------------------------- */
+[class^="fi-"],
+[class*=" fi-"] {
+  font-family: CommonFonts;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  font-size: 1em;
+}
+[class^="fi-"]:hover,
+[class*=" fi-"]:hover{text-decoration:none;}
+[class^="fi-"]:before,
+[class*=" fi-"]:before {
+  text-decoration: inherit;
+  display: inline-block;
+  speak: none;
+}
+.fi-0:before{content:"\f000";}
+.fi-1:before{content:"\f001";}
+.fi-2:before{content:"\f002";}
+.fi-3:before{content:"\f003";}
+.fi-4:before{content:"\f004";}
+.fi-5:before{content:"\f005";}
+.fi-6:before{content:"\f006";}
+.fi-7:before{content:"\f007";}
+.fi-8:before{content:"\f008";}
+.fi-9:before{content:"\f009";}
+.fi-10:before{content:"\f010";}
+.fi-11:before{content:"\f011";}
+.fi-12:before{content:"\f012";}
+.fi-13:before{content:"\f013";}
+.fi-14:before{content:"\f014";}
+.fi-15:before{content:"\f015";}
+.fi-16:before{content:"\f016";}
+.fi-17:before{content:"\f017";}
+.fi-18:before{content:"\f018";}
+.fi-19:before{content:"\f019";}
+.fi-20:before{content:"\f020";}
+.fi-21:before{content:"\f021";}
+.fi-22:before{content:"\f022";}
+.fi-23:before{content:"\f023";}
+.fi-24:before{content:"\f024";}
+.fi-25:before{content:"\f025";}
+.fi-26:before{content:"\f026";}
+.fi-27:before{content:"\f027";}
+.fi-28:before{content:"\f028";}
+.fi-29:before{content:"\f029";}
+.fi-30:before{content:"\f030";}
+.fi-31:before{content:"\f031";}
+.fi-32:before{content:"\f032";}
+.fi-33:before{content:"\f033";}
+.fi-34:before{content:"\f034";}
+.fi-35:before{content:"\f035";}
+.fi-36:before{content:"\f036";}
+.fi-37:before{content:"\f037";}
+.fi-38:before{content:"\f038";}
+.fi-39:before{content:"\f039";}
+.fi-40:before{content:"\f040";}
+.fi-41:before{content:"\f041";}
+.fi-42:before{content:"\f042";}
+.fi-43:before{content:"\f043";}
+.fi-44:before{content:"\f044";}
+.fi-45:before{content:"\f045";}
+.fi-46:before{content:"\f046";}
+.fi-47:before{content:"\f047";}
+.fi-48:before{content:"\f048";}
+.fi-49:before{content:"\f049";}
+.fi-50:before{content:"\f050";}
+.fi-51:before{content:"\f051";}
+.fi-52:before{content:"\f052";}
+.fi-53:before{content:"\f053";}
+.fi-54:before{content:"\f054";}
+.fi-55:before{content:"\f055";}
+.fi-56:before{content:"\f056";}
+.fi-57:before{content:"\f057";}
+.fi-58:before{content:"\f058";}
+.fi-59:before{content:"\f059";}
+.fi-60:before{content:"\f060";}
+.fi-61:before{content:"\f061";}
+.fi-62:before{content:"\f062";}
+.fi-63:before{content:"\f063";}
+.fi-64:before{content:"\f064";}
+.fi-65:before{content:"\f065";}
+.fi-66:before{content:"\f066";}
+.fi-67:before{content:"\f067";}
+.fi-68:before{content:"\f068";}
+.fi-69:before{content:"\f069";}
+.fi-70:before{content:"\f070";}
+.fi-71:before{content:"\f071";}
+.fi-72:before{content:"\f072";}
+.fi-73:before{content:"\f073";}
+.fi-74:before{content:"\f074";}
+.fi-75:before{content:"\f075";}
+.fi-76:before{content:"\f076";}
+.fi-77:before{content:"\f077";}
+.fi-78:before{content:"\f078";}
+.fi-79:before{content:"\f079";}
+.fi-80:before{content:"\f080";}
+.fi-81:before{content:"\f081";}
+.fi-82:before{content:"\f082";}
+.fi-83:before{content:"\f083";}
+.fi-84:before{content:"\f084";}
+.fi-85:before{content:"\f085";}
+.fi-86:before{content:"\f086";}
+.fi-87:before{content:"\f087";}
+.fi-88:before{content:"\f088";}
+.fi-89:before{content:"\f089";}
+.fi-90:before{content:"\f090";}
+.fi-91:before{content:"\f091";}
+.fi-92:before{content:"\f092";}
+.fi-93:before{content:"\f093";}
+.fi-94:before{content:"\f094";}
+.fi-95:before{content:"\f095";}
+.fi-96:before{content:"\f096";}
+.fi-97:before{content:"\f097";}
+.fi-98:before{content:"\f098";}
+.fi-99:before{content:"\f099";}
+.fi-100:before{content:"\f100";}
+.fi-101:before{content:"\f101";}
+.fi-102:before{content:"\f102";}
+.fi-103:before{content:"\f103";}
+.fi-104:before{content:"\f104";}
+.fi-105:before{content:"\f105";}
+.fi-106:before{content:"\f106";}
+.fi-107:before{content:"\f107";}
+.fi-108:before{content:"\f108";}
+.fi-109:before{content:"\f109";}
+.fi-110:before{content:"\f110";}
+.fi-111:before{content:"\f111";}
+.fi-112:before{content:"\f112";}
+.fi-113:before{content:"\f113";}
+.fi-114:before{content:"\f114";}
+.fi-115:before{content:"\f115";}
+.fi-116:before{content:"\f116";}
+.fi-117:before{content:"\f117";}
+.fi-118:before{content:"\f118";}
+.fi-119:before{content:"\f119";}
+.fi-120:before{content:"\f120";}
+.fi-121:before{content:"\f121";}
+.fi-122:before{content:"\f122";}
+.fi-123:before{content:"\f123";}
+.fi-124:before{content:"\f124";}
+.fi-125:before{content:"\f125";}
+.fi-126:before{content:"\f126";}
+.fi-127:before{content:"\f127";}
+.fi-128:before{content:"\f128";}
+.fi-129:before{content:"\f129";}
+.fi-130:before{content:"\f130";}
+.fi-131:before{content:"\f131";}
+.fi-132:before{content:"\f132";}
+.fi-133:before{content:"\f133";}
+.fi-134:before{content:"\f134";}
+.fi-135:before{content:"\f135";}
+.fi-136:before{content:"\f136";}
+.fi-137:before{content:"\f137";}
+.fi-138:before{content:"\f138";}
+.fi-139:before{content:"\f139";}
+.fi-140:before{content:"\f140";}
+.fi-141:before{content:"\f141";}
+.fi-142:before{content:"\f142";}
+.fi-143:before{content:"\f143";}
+.fi-144:before{content:"\f144";}
+.fi-145:before{content:"\f145";}
+.fi-146:before{content:"\f146";}
+.fi-147:before{content:"\f147";}
+.fi-148:before{content:"\f148";}
+.fi-149:before{content:"\f149";}
+.fi-150:before{content:"\f150";}
