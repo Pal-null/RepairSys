@@ -1,138 +1,132 @@
 package demo
 
 import (
+	. "controllers/common"
+	"errors"
 	"github.com/astaxie/beego"
-	"controllers/common"
-	"models/table"
+	"logger"
+	"models"
 )
 
-// 							[控制器声明]
-
-// 声明添加控制器
-type AddDemo struct{
-	beego.Controller;
+// 控制器声明
+// 声明一个路由
+type DemoCtrl struct {
+	beego.Controller
 }
 
-// 声明删除控制器
-type DeleteDemo struct{
-	beego.Controller;
-}
+//每个请求都会先进来这里
+//func (this *DemoCtrl) Prepare() {
+//	// 获取前台传过来的数据
+//	id, _ := this.GetInt("Id")
+//	name := this.GetString("Name")
+//	logger.Debug(id, name)
+//
+//	if name == "end" {
+//		OutData(this.Ctx.ResponseWriter, "ok", nil)
+//		//终止这个请求
+//		this.StopRun()
+//	}
+//}
 
-// 声明更改控制器
-type UpdateDemo struct{
-	beego.Controller;
-}
-
-// 声明搜索控制器
-type SearchDemo struct{
-	beego.Controller;
-}
-
-// 							[控制器实现]
-
+// 控制器处理
 // 添加 - Post
-func (this *AddDemo) AddDemo_Post() {
-	beego.Debug("AddDemo")
-	// 声明返回前台的数据
-	reqData := make(map[string]interface{})
-	// 获取前台传过来的数据
-	name := this.GetString("Name")
-	// 可添加参数检测。。。。。
+func (this *DemoCtrl) AddDemo_Post() {
+	logger.Debug("--")
+	// 参数声明
+	var name string
+	data := make(map[string]interface{})
+	var err error
+	// 参数处理及参数检测
+	name = this.GetString("Name")
 	// 处理添加事件
-	err := addDemoHandle(name)
+	data, err = AddDemoHandle(name)
 	// 将数据返回前台
-	if err == nil {
-		common.OutputJson(this.Ctx.ResponseWriter, true, "添加成功", reqData)
-	}else {
-		beego.Error(err)
-		common.OutputJson(this.Ctx.ResponseWriter, false, "添加失败", reqData)
-	}
+	OutData(this.Ctx.ResponseWriter, data, err)
 }
 
 // 删除 - Post
-func (this *DeleteDemo) DeleteDemo_Post() {
-	beego.Debug("DeleteDemo")
+func (this *DemoCtrl) DeleteDemo_Post() {
+	logger.Debug("DeleteDemo")
 	// 声明返回前台的数据
-	reqData := make(map[string]interface{})
+	data := make(map[string]interface{})
+	var err error
+	var id int64
 	// 获取前台传过来的数据
-	id, _ := this.GetInt("Id")
+	id, err = this.GetInt("Id")
 	// 可添加参数检测。。。。。
 	// 处理删除事件
-	err := deleteDemoHandle(id)
+	data, err = DeleteDemoHandle(id)
 	// 将数据返回前台
-	if err == nil {
-		common.OutputJson(this.Ctx.ResponseWriter, true, "删除成功", reqData)
-	}else {
-		beego.Error(err)
-		common.OutputJson(this.Ctx.ResponseWriter, false, "删除失败", reqData)
-	}
+	OutData(this.Ctx.ResponseWriter, data, err)
 }
 
 // 修改 - Post
-func (this *UpdateDemo) UpdateDemo_Post() {
-	beego.Debug("UpdateDemo")
+func (this *DemoCtrl) UpdateDemo_Post() {
+	logger.Debug("UpdateDemo")
 	// 声明返回前台的数据
-	reqData := make(map[string]interface{})
+	data := make(map[string]interface{})
+	var id int64
+	var name string
+	var err error
 	// 获取前台传过来的数据
-	id, _ := this.GetInt("Id")
-	name := this.GetString("Name")
-	// 可添加参数检测。。。。。
+	id, err = this.GetInt("Id")
+	name = this.GetString("Name")
 	// 处理更新数据事件
-	err := updateDemoHandle(id, name)
-	beego.Debug(err)
+	data, err = UpdateDemoHandle(id, name)
 	// 将数据返回前台
-	if err == nil {
-		common.OutputJson(this.Ctx.ResponseWriter, true, "修改成功", reqData)
-	}else {
-		beego.Error(err)
-		common.OutputJson(this.Ctx.ResponseWriter, false, "修改失败", reqData)
-	}
+	OutData(this.Ctx.ResponseWriter, data, err)
 }
 
 // 搜索 - Get
-func (this *SearchDemo) SearchDemo_Get() {
-	beego.Debug("SearchDemo")
-	var err error
+func (this *DemoCtrl) SearchDemo_Get() {
+	logger.Debug("SearchDemo")
+	//	var err error
 	// 声明返回前台的数据
-	reqData := make(map[string]interface{})
+	data := make(map[string]interface{})
 	// 处理获取数据事件
-	reqData["users"], err = searcherDemoHandle()
+	data, err := SearcherDemoHandle()
 	// 将数据返回前台
-	if err == nil {
-		common.OutputJson(this.Ctx.ResponseWriter, true, "获取数据成功", reqData)
-	}else {
-		beego.Error(err)
-		common.OutputJson(this.Ctx.ResponseWriter, false, "获取数据失败", reqData)
-	}
+	OutData(this.Ctx.ResponseWriter, data, err)
 }
 
-// 							[处理函数]
+// 处理函数
 // 删除 - 处理函数
-func deleteDemoHandle(id int64) error {
-	user := table.User{
+func DeleteDemoHandle(id int64) (reqData map[string]interface{}, err error) {
+	reqData = make(map[string]interface{})
+	user := models.User{
 		Id: id,
 	}
-	return user.DeleteUser()
+	if user.DeleteUser() != nil {
+		err = errors.New("删除失败")
+		return
+	}
+	return
 }
 
 // 更新 - 处理函数
-func updateDemoHandle(id int64, name string) error {
-	user := table.User{
-		Id: id,
+func UpdateDemoHandle(id int64, name string) (reqData map[string]interface{}, err error) {
+	reqData = make(map[string]interface{})
+	user := models.User{
+		Id:   id,
 		Name: name,
 	}
-	return user.UpdateUser()
+	err = user.UpdateUser()
+	return
 }
 
 // 搜索 - 处理函数
-func searcherDemoHandle() ([]table.User, error) {
-	return table.SearcherUser()
+func SearcherDemoHandle() (reqData map[string]interface{}, err error) {
+	reqData = make(map[string]interface{})
+	reqData["users"], err = models.SearcherUser()
+	return
 }
 
 // 添加 - 处理函数
-func addDemoHandle(name string) error {
-	user := table.User{
+func AddDemoHandle(name string) (reqData map[string]interface{}, err error) {
+	reqData = make(map[string]interface{})
+	user := models.User{
 		Name: name,
 	}
-	return user.AddUser()
+	err = user.AddUser()
+	return
 }
