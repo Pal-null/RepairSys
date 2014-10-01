@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="repairApp">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta charset="UTF-8">
+<title>报修人员后台</title>
+<link rel="stylesheet" type="text/css" href="fonts/font-icon.css" />
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+<script type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="lib/global/binApp-1.0.js"></script>
+<script type="text/javascript" src="lib/global/base.js"></script>
+<script type="text/javascript" src="lib/angular/angular.min.js"></script>
+<script type="text/javascript" src="lib/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="js/repair/route.js"></script>
+<script type="text/javascript" src="js/repair/c-repair.js"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/global/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<!--client-body-->
+<div class="g-body g-min-w">
+
+<!--header view-->
+<header class="header">
+	<div class="logo"><a href="javascript:;"><img src="imgs/logo.png" alt="大洋LOGO" title="广州大洋信息技术有限公司 " /></a></div>
+    <div class="text">
+    	<div class="box">
+    	<p class="h1">售后服务管理系统</p>
+        <p>Service management system</p>
+        </div>
+    </div>
+</header>
+
+
+
+<!--menu view-->
+<nav class="menu">
+    <div class="nav">
+    	<div class="columns-of">
+            <div class="user-info">
+                <div class="text-of">Hi，报修人员</div>
+            </div>
+        </div>
+        <div class="scroll-wrap">
+            <div class="part">
+                <a href="javascript:;" class="option cur"><div class="pd"><div class="text-of"><em class="fi fi-133" alt="报修管理"></em>报修管理</div></div></a>
+            </div>
+            <div class="part">
+                <a href="javascript:;" class="option"><div class="pd"><div class="text-of"><em class="fi fi-134" alt="注销"></em>注销</div></div></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!--menu view end-->
+
+<!--main view-->
+<section class="main" ng-view></section>
+<!--main view end-->
+
+</div>
+<!--client-body end-->
+
+<script>
+showLoading(hideLoading);
+</script>
+</body>
+</html>
+<script>mobileBodyMinScale();</script>

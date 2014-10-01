@@ -2,11 +2,28 @@
 
 ## 环境配置
 
-运行目录下 `doc/initCmd/npm global install.cmd`    
-或者复制共享目录 `\\D\\npm`   
+全局npm安装  (C:\Users\%UserName%\AppData\Roaming\npm)
 
-再运行 `doc/initCmd/npm local install.cmd`  
-或者复制共享目录 `\\D\RepairSys\node_modules`  
+    npm install -g grunt  
+    npm install -g grunt-cli  
+    npm install -g grunt-shell  
+    npm install -g karma  
+    npm install -g karma-cli  
+    npm install -g karma-coverage  
+    npm install -g karma-jasmine  
+    npm install -g karma-junit-reporter  
+    npm install -g protractor  
+    
+或者复制共享目录 `\\D\\npm`
+
+项目下安装 (%RepairSys%\\node_modules)
+
+    npm install grunt  
+    npm install grunt-shell  
+    npm install protractor
+
+
+或者复制共享目录 `\\D\RepairSys\node_modules`
 
 ## 运行测试
 

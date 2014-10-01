@@ -15,10 +15,10 @@ func init() {
 }
 
 // User表的添加方法
-func (user *User) AddUser() error {
+func (user *User) AddUser() (id int64, err error) {
 	o := orm.NewOrm()
-	_, err := o.Insert(user)
-	return err
+	id, err = o.Insert(user)
+	return
 }
 
 // User表的搜索方法

@@ -1,0 +1,330 @@
+
+<div class="frames-body">
+
+<div class="columns-of">
+    <div class="bread-crumbs">
+        <div class="link-wrap">
+            <ul>
+                <li><span>报修管理</span></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+<div class="scroll-wrap" style="top:45px;">
+<div class="m-pd-w">
+<!--main-view start-->
+<div class="main-view">
+
+<div class="pd-b20">
+    <table width="100%">
+        <tr>
+            <td><a href="javascript:;" class="ic-btn orange style2" onClick="binApp.window(binApp.getId('RepairWin'),{action:'scale',fixed:true},'normal')">报修</a></td>
+        </tr>
+        <tr><td colspan="2" height="20"></td></tr>
+        <tr>
+            <td>
+                <div class="search-bar">
+                    <span class="mg-r30">所属项目：<input type="text" class="text" /></span>
+                    <span class="mg-r30">报修单状态：<input type="text" class="text" /></span>
+                    <span><button type="submit" class="search-btn"> 搜索 </button></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!--table-view start-->
+<div class="table-view">
+    <div class="table-nav">
+        <a href="javascript:;" class="option cur">正在进行</a><a href="javascript:;" class="option">已完成</a><a href="javascript:;" class="option">已关闭</a>
+    </div>
+    <div class="table-bar">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr>
+                    <th align="left" height="25"><div class="max260 min80 pd-l30">时间</div></th>
+                    <th align="left"><div class="max260 min140">问题描述</div></th>
+                    <th align="left"><div class="max260 min80">所属项目</div></th>
+                    <th align="left"><div class="max260 min60">报修人</div></th>
+                    <th align="left"><div class="max260 min80">报修单状态</div></th>
+                    <th align="center"><div class="min180">操作</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">2014.07.25</div></td>
+                    <td align="left"><div class="max260">电脑坏了</div></td>
+                    <td align="left"><div class="max260">项目一</div></td>
+                    <td align="left">张三</td>
+                    <td align="left">已完成</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"><a href="javascript:;" class="normal-c"><em class="fi-143 fs-16 mg-r5"></em>查看</a></td>
+                                <td align="center">
+                                    <a href="javascript:;" class="red-c"><em class="fi-43 fs-16 mg-r5"></em>投诉</a>
+                                    <a href="javascript:;" class="blue-c" style="display:none;">投诉中</a>
+                                </td>
+                                <td align="center">
+                                    <a href="javascript:;" class="green-c" onClick="binApp.window(binApp.getId('ConfirmWin'),{action:'scale',fixed:true},'normal')"><em class="fi-42 fs-16 mg-r5"></em>确认</a>
+                                    <a href="javascript:;" class="coral-c" style="display:none;"><em class="fi-71 fs-18 mg-r5"></em>撤销</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">2014.07.25</div></td>
+                    <td align="left"><div class="max260">电脑坏了</div></td>
+                    <td align="left"><div class="max260">项目一</div></td>
+                    <td align="left">张三</td>
+                    <td align="left">已完成</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center" width="33%"><a href="javascript:;" class="normal-c"><em class="fi-143 fs-16 mg-r5"></em>查看</a></td>
+                                <td align="center" width="33%">
+                                    <a href="javascript:;" class="red-c"><em class="fi-43 fs-16 mg-r5"></em>投诉</a>
+                                    <a href="javascript:;" class="blue-c" style="display:none;">投诉中</a>
+                                </td>
+                                <td align="center" width="33%">
+                                    <a href="javascript:;" class="green-c" style="display:none;"><em class="fi-42 fs-16 mg-r5"></em>确认</a>
+                                    <a href="javascript:;" class="coral-c"><em class="fi-71 fs-18 mg-r5"></em>撤销</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">2014.07.25</div></td>
+                    <td align="left"><div class="max260">电脑坏了</div></td>
+                    <td align="left"><div class="max260">项目一</div></td>
+                    <td align="left">张三</td>
+                    <td align="left">已完成</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center" width="33%"><a href="javascript:;" class="normal-c"><em class="fi-143 fs-16 mg-r5"></em>查看</a></td>
+                                <td align="center" width="33%">
+                                    <a href="javascript:;" class="red-c" style="display:none;"><em class="fi-43 fs-16 mg-r5"></em>投诉</a>
+                                    <a href="javascript:;" class="blue-c">投诉中</a>
+                                </td>
+                                <td align="center" width="33%">
+                                    <a href="javascript:;" class="green-c" style="display:none;"><em class="fi-42 fs-16 mg-r5"></em>确认</a>
+                                    <a href="javascript:;" class="coral-c"><em class="fi-71 fs-18 mg-r5"></em>撤销</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="7" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="prevPage pageBtn disabled">上一页</a>
+                                <a class="cur">1</a>
+                                <a href="javascript:;" class="">2</a>
+                                <a href="javascript:;">3</a>
+                                <font>...</font>
+                                <a href="javascript:;" class="nextPage pageBtn">下一页</a>
+                                <!--<span class="s-block">共 <label class="blue-c">4</label> 页</span>
+                                <span class="s-block">到第 <input type="text" name="" value="" class="jump-text"> 页</span>
+                                <a href="javascript:;">GO</a>-->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--table-view end-->
+
+
+<div style="border:dashed red;border-width:1px 0 1px 0;color:red;margin:20px 0;">以下是查看部分代码</div>
+
+
+<div class="full-width">
+    <table width="100%" class="see-list">
+        <tr class="tr">
+            <td class="td-key" width="80"><strong>报修单号:</strong></td>
+            <td>12345678</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>单位：</strong></td>
+            <td>广州大学</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>时间：</strong></td>
+            <td>2014-01-22</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>报修人：</strong></td>
+            <td>张三</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>项目：</strong></td>
+            <td>广州大学实验室项目</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>报修设备：</strong></td>
+            <td>神舟笔记本电脑</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>设备编号：</strong></td>
+            <td>123456781</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong class="coral-c">维修费用：</strong></td>
+            <td>50000元</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>电话号码：</strong></td>
+            <td>235413185115</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>问题:</strong></td>
+            <td>无</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>问题描述：</strong></td>
+            <td>电脑第一次打开就无法开机，接触电源后也没反应</td>
+        </tr>
+    </table>
+
+    <div class="pd-t10">
+        <div class="pd-t10 pd-b10 h4">消息跟踪：</div>
+        <table width="100%" class="tab-s2">
+            <thead>
+            <tr class="beige-tr">
+                <th width="160" align="left">时间</th>
+                <th align="left">内容</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>2014.07.25　16：00</td>
+                <td>您发布了一张新报修单</td>
+            </tr>
+            <tr>
+                <td>2014.07.26　16：36</td>
+                <td>分派员收到报修单并派出工程师前往。</td>
+            </tr>
+            <tr>
+                <td>2014.07.27　36：58</td>
+                <td>工程师到达现场并进行维修</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--确认窗口 start-->
+<div class="winStyle" id="ConfirmWin">
+    <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+    <div class="win-hd binDrag">评价确认</div>
+    <div class="win-m">
+        <div class="win-pd-w">
+
+            <div align="center">
+                <p class="h4">请为本次服务给予评价，谢谢!</p>
+                <div class="pd-t15">
+                    <span class="mg-r20"><label><input type="radio" name="e-conf-radio" checked /> 满意</label></span>
+                    <span><label><input type="radio" name="e-conf-radio" /> 一般</label></span>
+                    <span class="mg-l20"><label><input type="radio" name="e-conf-radio" /> 不满意</label></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="win-ft">
+        <a href="javascript:;" class="ic-btn orange mg-r5">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+    </div>
+</div>
+<!--确认窗口 end-->
+
+
+<!--报修窗口 start-->
+<div class="winStyle repair-win" id="RepairWin">
+    <div class="binDrag" style="cursor:default;">
+        <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+        <div class="win-hd binDrag">报修</div>
+        <div class="win-m">
+            <div class="win-pd-w">
+
+                <div class="repair-form">
+                    <ul>
+                        <li class="part">电话：　　　<input type="text" class="text" data-ng-model="repairFormModel.tel"/></li>
+                        <li class="part">报修联系人：<input type="text" class="text" data-ng-model="repairFormModel.name"/></li>
+                        <li class="part">设备编号：　<input type="text" class="text" data-ng-model="repairFormModel.id"/></li>
+                        <li class="part">
+                            <p class="pd-b5">问题类型：</p>
+                            <div class="Q-type cancelBubble">
+                                <ul>
+                                    <li data-ng-repeat="qu in repairFormModel.commQu track by $index">
+                                        <div class="text-of">
+                                            <label>
+                                                <input type="checkbox" class="mg-r5" ng-checked="checkedCommQu.indexOf(qu) != -1" ng-click="toggleCommQuCheck(qu)" />
+                                                {{qu}}
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="part">
+                            <p class="pd-b5">自定义问题描述：</p>
+                            <div class="textarea-wrap">
+                                <textarea class="textarea" data-ng-model="repairFormModel.cusQu"></textarea>
+                            </div>
+                        </li>
+                        <li class="part">
+                            <a href="javascript:;" class="ic-btn style3 f-l" onClick="binApp.getId('RepairFileImg').click()">添加图片</a><input type="file" id="RepairFileImg" style="display:none;" />
+                            <div class="img-wrap">
+                                <ul>
+                                    <li class="img-box"><div class="m-pic"><img src="imgs/loading.gif" /></div></li>
+                                    <li class="img-box"><div class="m-pic" style="display:none;"><img src="" /></div></li>
+                                    <li class="img-box"><div class="m-pic" style="display:none;"><img src="" /></div></li>
+                                    <li class="img-box"><div class="m-pic" style="display:none;"><img src="" /></div></li>
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="win-ft">
+            <a href="javascript:;" class="ic-btn orange mg-r5">确认</a>
+            <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+        </div>
+    </div>
+</div>
+<!--报修窗口 end-->
+
+
+
+
+</div>
+<!--main-view end-->
+</div>
+<footer class="footer">
+    <p>技术支持：广州大洋信息技术有限公司  |  <a href="#" target="_blank">Contact us</a></p>
+    <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+</footer>
+</div>
+
+<br />
+<div class="clear"></div>
+</div>

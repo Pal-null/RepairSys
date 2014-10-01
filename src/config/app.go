@@ -8,14 +8,15 @@ import (
 )
 
 const (
-	//	mysqluser = "root"
-	//	mysqlpass =" 51026"
-	//	mysqlurls = "172.22.71.130:3306"
-	//	mysqldb   = "repairesys"
-	mysqluser = "root"
-	mysqlpass = "51026"
-	mysqlurls = "172.22.71.130:3306"
-	mysqldb   = "repairesys"
+		/*mysqluser = "root"
+		mysqlpass = "mysql"
+		mysqlurls = "172.22.71.121:3306"
+		mysqldb   = "test"*/
+
+	mysqluser = "csm_d"
+	mysqlpass = "123"
+	mysqlurls = "qnear.org:3306"
+	mysqldb   = "csm_d"
 )
 
 func Init() {
@@ -36,8 +37,9 @@ func Init() {
 	//数据库初始化
 	orm.RegisterDriver("mysql", orm.DR_MySQL)
 
+	//最大闲连接数
 	maxIdle := 30
-	//最大连接数
+	//最大总连接数
 	maxConn := 30
 
 	logger.Debug("mysqluser=", mysqluser, "mysqlpass=", mysqlpass)

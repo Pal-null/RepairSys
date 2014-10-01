@@ -6,6 +6,10 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
+var(
+	 id int64
+)
+
 func init() {
 	config.Init()
 }
@@ -13,23 +17,24 @@ func init() {
 // Test Demo
 func Test_Demo(t *testing.T) {
 	Convey("Test Demo", t, func() {
-			Convey("Test AddDemoHandle", func() {
-					_, err := AddDemoHandle("lmx")
-					So(err, ShouldBeNil)
-				})
-			Convey("Test UpdateDemoHandle", func() {
-					_, err := UpdateDemoHandle(33, "lmx")
-					So(err, ShouldBeNil)
-				})
-			Convey("Test SearcherDemoHandle", func() {
-					_, err := SearcherDemoHandle()
-					So(err, ShouldBeNil)
-				})
-			Convey("Test DeleteDemoHandle", func() {
-					_, err := DeleteDemoHandle(1)
-					So(err, ShouldBeNil)
-				})
+		Convey("Test AddDemoHandle", func() {
+			result, err := AddDemoHandle("lmx")
+			id = result.Data.(map[string]interface{})["Id"].(int64)
+			So(err, ShouldBeNil)
 		})
+		Convey("Test UpdateDemoHandle", func() {
+			_, err := UpdateDemoHandle(id, "lmx")
+			So(err, ShouldBeNil)
+		})
+		Convey("Test SearcherDemoHandle", func() {
+			_, err := SearcherDemoHandle()
+			So(err, ShouldBeNil)
+		})
+		Convey("Test DeleteDemoHandle", func() {
+			_, err := DeleteDemoHandle(1)
+			So(err, ShouldBeNil)
+		})
+	})
 
 }
 

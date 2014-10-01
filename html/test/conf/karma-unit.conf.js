@@ -14,8 +14,12 @@ module.exports = function(config) {
             'lib/jquery-1.11.0.min.js',
             'lib/angular/angular-mocks.js',
             'lib/global/*.js',
-            'js/**/*.js',//源文件
-            'test/unit/**/*.js'//测试文件
+            'js/common/*.js',
+            //在这里添加源文件
+            'js/demo/router.js',//必须先引用router.js
+            'js/demo/*.js',
+            //在这里添加单元测试文件
+            'test/unit/demo/*.js'
         ],
         preprocessors: {
             'js/**/*.js': 'coverage'//需要测试覆盖率的js文件

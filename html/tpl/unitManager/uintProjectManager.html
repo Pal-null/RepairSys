@@ -1,0 +1,316 @@
+<section class="main">
+<div class="frames-body">
+
+<div class="columns-of">
+    <div class="bread-crumbs">
+        <div class="link-wrap">
+            <ul class="animate-switch" ng-switch on="viewselect">
+                <!--<li><a href="javascript:;">管理中心</a></li>
+                <li> &gt; </li>
+                <li><a href="javascript:;">店铺管理</a></li>
+                <li> &gt; </li>-->
+                <li class="animate-switch" ng-switch-when="maintable">
+                    <span>项目管理</span>
+                </li>
+                <li class="animate-switch" ng-switch-when="equipmentTable">
+                    <a ng-click="backProjectTable()">项目管理</a>
+                    <span>-></span>
+                    <span>查看设备</span>
+                </li>
+                <li class="animate-switch" ng-switch-when="equipmentDetail">
+                    <a ng-click="backProjectTable()">项目管理</a>
+                    <span>-></span>
+                    <a ng-click="backEquTableShow()">查看设备</a>
+                    <span>-></span>
+                    <span>设备详细信息</span>
+                </li>
+
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+<div class="scroll-wrap" style="top:45px;">
+<div class="m-pd-w">
+<!--main-view start-->
+<div class="main-view" class="animate-switch" ng-switch on="viewselect">
+
+
+
+<div ng-switch-when="maintable">
+<div class="pd-b20">
+    <table width="100%">
+        <tr>
+            <td>
+                <div class="search-bar">
+                    <span class="mg-r30">项目名称：<input type="text" class="text" data-ng-model="searchinput"/></span>
+                    <span><button type="submit" class="search-btn" ng-click=""> 搜索 </button></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!--table-view start-->
+<div class="table-view" >
+    <div class="table-nav">
+        <a href="javascript:;" class="option cur">项目管理</a>
+    </div>
+    <div class="table-bar">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr>
+                    <th align="left" height="25"><div class="pd-l30">项目名称</div></th>
+                    <th align="center"><div class="min150">操作</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="tr" data-ng-repeat="project in projects">
+                    <td align="left"><div class="pd-l30">{{project.Name}}</div></td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"><a ng-click="projectEquipment()"><em class="fi-143 fs-16 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">查看</span></a></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="7" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="prevPage pageBtn disabled">上一页</a>
+                                <a class="cur">1</a>
+                                <a href="javascript:;" class="">2</a>
+                                <a href="javascript:;">3</a>
+                                <font>...</font>
+                                <a href="javascript:;" class="nextPage pageBtn">下一页</a>
+                                <span class="s-block">共 <label class="blue-c">4</label> 页</span>
+                                <span class="s-block">到第 <input type="text" name="" value="" class="jump-text"> 页</span>
+                                <a href="javascript:;">GO</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--table-view end-->
+</div>
+
+<!--<div style="border:dashed red;border-width:1px 0 1px 0;color:red;margin:20px 0;">以下是设备列表部分代码</div>-->
+
+<div ng-switch-when="equipmentTable">
+<div class="pd-b20" >
+    <table width="100%">
+        <tr>
+            <td>
+                <div class="search-bar">
+                    <span class="mg-r30">项目编号：<input type="text" class="text" /></span>
+                    <span class="mg-r30">项目名：<input type="text" class="text" /></span>
+                    <span><button type="submit" class="search-btn"> 搜索 </button></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!--table-view start-->
+<div class="table-view">
+    <div class="table-nav">
+        <a href="javascript:;" class="option cur">设备列表</a>
+    </div>
+    <div class="table-bar">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr>
+                    <th align="left" height="25"><div class="max260 min100 pd-l30">项目编号</div></th>
+                    <th align="left"><div class="max260 min100">设备</div></th>
+                    <th align="center"><div class="max260 min80">保修期</div></th>
+                    <th align="center"><div class="max260 min100">报修起始时间</div></th>
+                    <th align="center"><div class="max260 min80">状态</div></th>
+                    <th align="center"><div class="min150">操作</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">10086</div></td>
+                    <td align="left">神舟战神笔记本</td>
+                    <td align="center">1年</td>
+                    <td align="center">2014-07-25</td>
+                    <td align="center">正常</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"><a href="javascript:;" class="darkturquoise-c" onclick="binApp.window(binApp.getId('EditEquipment'),{action:'scale',fixed:true},'normal')"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">编辑</span></a></td>
+                                <td align="center"><a ng-click="equipmentDetail()" class="blue-c"><em class="fi-143 fs-16 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">查看</span></a></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">10086</div></td>
+                    <td align="left">神舟战神笔记本</td>
+                    <td align="center">1年</td>
+                    <td align="center">2014-07-25</td>
+                    <td align="center">正常</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"><a href="javascript:;" class="darkturquoise-c" onclick="binApp.window(binApp.getId('EditEquipment'),{action:'scale',fixed:true},'normal')"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">编辑</span></a></td>
+                                <td align="center"><a href="javascript:;" class="blue-c"><em class="fi-143 fs-16 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">查看</span></a></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">10086</div></td>
+                    <td align="left">神舟战神笔记本</td>
+                    <td align="center">1年</td>
+                    <td align="center">2014-07-25</td>
+                    <td align="center">正常</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"><a href="javascript:;" class="darkturquoise-c" onclick="binApp.window(binApp.getId('EditEquipment'),{action:'scale',fixed:true},'normal')"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">编辑</span></a></td>
+                                <td align="center"><a href="javascript:;" class="blue-c"><em class="fi-143 fs-16 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">查看</span></a></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="7" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="prevPage pageBtn disabled">上一页</a>
+                                <a class="cur">1</a>
+                                <a href="javascript:;" class="">2</a>
+                                <a href="javascript:;">3</a>
+                                <font>...</font>
+                                <a href="javascript:;" class="nextPage pageBtn">下一页</a>
+                                <span class="s-block">共 <label class="blue-c">4</label> 页</span>
+                                <span class="s-block">到第 <input type="text" name="" value="" class="jump-text"> 页</span>
+                                <a href="javascript:;">GO</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--table-view end-->
+    <div class="ic-btn" ng-click="backProjectTable()">返回</div>
+</div>
+
+<!--<div style="border:dashed red;border-width:1px 0 1px 0;color:red;margin:20px 0;">以下是查看设备详情部分代码</div>-->
+
+<div class="full-width" ng-switch-when="equipmentDetail">
+    <h4 class="pd-b10"><strong>设备编号：1234567896</strong></h4>
+    <p class="h4 pd-b10"><strong>设备详细信息：</strong></p>
+    <div class="details-c-w">
+        上市时间 2013年07月<br>
+        产品类型 家用<br>
+        产品定位 游戏影音本，家庭娱乐本<br>
+        操作系统 Linux<br>
+        主板芯片组 Intel HM87<br>
+        CPU系列 英特尔 酷睿i7 4代系列<br>
+        CPU型号 Intel 酷睿i7 4700MQ<br>
+        CPU主频 2.4GHz<br>
+        最高睿频 3400MHz<br>
+        总线规格 DMI 5 GT/s<br>
+        三级缓存 6MB<br>
+        核心架构 Haswell<br>
+        核心/线程数 四核心/八线程<br>
+        制程工艺 22nm<br>
+        指令集 AVX2，64bit<br>
+        功耗 47W<br>
+        内存容量 8GB（4GB×2）<br>
+        内存类型 DDR3L（低电压版）1600MHz<br>
+        插槽数量 3xSO-DIMM<br>
+        最大内存容量 24GB<br>
+        硬盘容量 120GB+1TB<br>
+        硬盘描述 混合硬盘（SSD+HDD）<br>
+        光驱类型 内置DVD刻录机<br>
+        光驱描述 支持DVD SuperMulti双层刻录
+    </div>
+    <div class="ic-btn center" ng-click="backEquTableShow()">返回</div>
+</div>
+
+<!--编辑窗口 start-->
+<div class="winStyle" id="EditEquipment">
+    <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+    <div class="win-hd binDrag">编辑</div>
+    <div class="win-m">
+        <div class="win-pd-w">
+
+            <table width="100%" class="tab-s3">
+                <tr>
+                    <td align="right">项目编号：</td>
+                    <td><input type="text" class="text-style" /></td>
+                </tr>
+                <tr>
+                    <td align="right">单位：</td>
+                    <td><input type="text" class="text-style" /></td>
+                </tr>
+                <tr>
+                    <td align="right">设备：</td>
+                    <td><input type="text" class="text-style" /></td>
+                </tr>
+                <tr>
+                    <td align="right">保修起始时间：</td>
+                    <td><input type="text" class="text-style" /></td>
+                </tr>
+                <tr>
+                    <td align="right">保修期：</td>
+                    <td><input type="text" class="text-style" /></td>
+                </tr>
+                <tr>
+                    <td align="right">状态：</td>
+                    <td><select class="select">
+                        <option value="请选择">请选择</option>
+                        <option value="1">普通硕士</option>
+                        <option value="2">本科国防生</option>
+                        <option value="3">硕士国防生</option>
+                    </select></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="win-ft" style="padding-top:0;">
+        <a href="javascript:;" class="ic-btn orange mg-r5">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+    </div>
+</div>
+<!--编辑窗口 end-->
+
+
+
+
+</div>
+<!--main-view end-->
+</div>
+<footer class="footer">
+    <p>技术支持：广州大洋信息技术有限公司  |  <a href="#" target="_blank">Contact us</a></p>
+    <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+</footer>
+</div>
+
+<br />
+<div class="clear"></div>
+</div>
+</section>

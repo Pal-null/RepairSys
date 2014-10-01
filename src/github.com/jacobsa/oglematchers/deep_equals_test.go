@@ -16,9 +16,9 @@
 package oglematchers_test
 
 import (
+	"bytes"
 	. "github.com/jacobsa/oglematchers"
 	. "github.com/jacobsa/ogletest"
-	"bytes"
 	"testing"
 )
 
@@ -26,7 +26,8 @@ import (
 // Helpers
 ////////////////////////////////////////////////////////////////////////
 
-type DeepEqualsTest struct {}
+type DeepEqualsTest struct{}
+
 func init() { RegisterTestSuite(&DeepEqualsTest{}) }
 
 ////////////////////////////////////////////////////////////////////////
