@@ -130,7 +130,7 @@ border:5px solid #666;border-color:transparent #ff6600 transparent transparent;b
 .s-sty .jump-text{padding:2px 8px;margin-top:-4px;*margin-top:0px;}
 
 .g-page-box.no-rdu a,
-.g-page-box.no-rdu sapn{border-radius:0;}
+.g-page-box.no-rdu span{border-radius:0;}
 /*page style end*/
 
 /*弹窗 style*/

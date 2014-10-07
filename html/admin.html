@@ -13,7 +13,11 @@
     <link rel="stylesheet" type="text/css" href="fonts/font-icon.css" />
     <link rel="stylesheet" type="text/css" href="css/base.css" />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
-    <script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/xlsx.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.2.custom.css" />
+    <script type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui-1.10.2.custom.js"></script>
+    <script type="text/javascript" src="lib/jquery.form.js"></script>
     <script type="text/javascript" src="lib/angular/angular.min.js"></script>
     <script type="text/javascript" src="lib/angular/angular-route.min.js"></script>
     <script type="text/javascript" src="lib/global/binApp-1.0.js"></script>
@@ -26,7 +30,11 @@
     <script type="text/javascript" src="js/admin/c-userMgr.js"></script>
     <script type="text/javascript" src="js/admin/c-pjMgr.js"></script>
     <script type="text/javascript" src="js/admin/c-unitMgr.js"></script>
-</head>
+    <script type="text/javascript" src="js/admin/c-prbMgr.js"></script>
+    <script type="text/javascript" src="js/admin/c-sysMgr.js"></script>
+    <script type="text/javascript" src="js/admin/deviceManager/projectCtrl.js"></script>
+    <script type="text/javascript" src="js/admin/deviceManager/unitDeviceCtrl.js"></script>
+    <script type="text/javascript" src="js/admin/deviceManager/propertyCtrl.js"></script></head>
 <body>
 
 <!--client-body-->
@@ -64,14 +72,14 @@
             <div class="part">
                 <a href="#/" class="option"><div class="pd"><div class="text-of"><em class="fi fi-139" alt="统计"></em>统计</div></div></a>
             </div>
-            <div class="part">
-                <a href="#/" class="option"><div class="pd"><div class="text-of"><em class="fi fi-133" alt="设备管理"></em>设备管理</div></div></a>
+          <div class="part">
+                <a href="#/unitDeviceProjectManager" class="option cur"><div class="pd"><div class="text-of"><em class="fi fi-133" alt="设备管理"></em>设备管理</div></div></a>
             </div>
             <div class="part">
-                <a href="#/" class="option"><div class="pd"><div class="text-of"><em class="fi fi-138" alt="通用问题"></em>通用问题</div></div></a>
+                <a href="#/prbMgr" class="option"><div class="pd"><div class="text-of"><em class="fi fi-138" alt="通用问题"></em>通用问题</div></div></a>
             </div>
             <div class="part">
-                <a href="#/" class="option"><div class="pd"><div class="text-of"><em class="fi fi-145" alt="系统设置"></em>系统设置</div></div></a>
+                <a href="#/sysMgr" class="option"><div class="pd"><div class="text-of"><em class="fi fi-145" alt="系统设置"></em>系统设置</div></div></a>
             </div>
             <div class="part">
                 <a onclick="logOff();" class="option"><div class="pd"><div class="text-of"><em class="fi fi-134" alt="注销"></em>注销</div></div></a>

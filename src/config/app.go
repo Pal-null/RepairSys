@@ -5,18 +5,21 @@ import (
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 	"logger"
+	"models"
 )
 
 const (
-		/*mysqluser = "root"
-		mysqlpass = "mysql"
-		mysqlurls = "172.22.71.121:3306"
-		mysqldb   = "test"*/
+//	mysqluser = "root"
+//	mysqlpass = "51026"
+//	mysqlurls = "172.22.71.130:3306"
+//	mysqldb   = "repairesys"
 
-	mysqluser = "csm_d"
-	mysqlpass = "123"
-	mysqlurls = "qnear.org:3306"
-	mysqldb   = "csm_d"
+
+		mysqluser = "csm_d"
+		mysqlpass = "123"
+		mysqlurls = "qnear.org:3306"
+		mysqldb   = "csm_d"
+
 )
 
 func Init() {
@@ -33,6 +36,9 @@ func Init() {
 	beego.SessionOn = true
 	//系统session保留时间
 	beego.SessionGCMaxLifetime = 1800
+
+	//注册表模型
+	models.InitModels()
 
 	//数据库初始化
 	orm.RegisterDriver("mysql", orm.DR_MySQL)

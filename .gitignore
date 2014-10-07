@@ -48,6 +48,8 @@ Temporary Items
 #Ignore folders
 .svn/
 .idea/
+bin/
+pkg/
 
 #Ignore files
 RepairSys.iml

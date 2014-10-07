@@ -50,7 +50,7 @@
 - tpl 中放置每个角色的view文件，分包放置
 - 所有角色的主页面文件直接放置在html目录下
 
-###scr
+###src
 - controller放置控制器
 - model放置数据库表的结构以及相对应函数
 - router 放置路由

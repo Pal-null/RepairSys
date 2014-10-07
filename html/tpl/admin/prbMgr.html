@@ -1,0 +1,162 @@
+<div class="frames-body">
+
+    <div class="columns-of">
+        <div class="bread-crumbs">
+            <div class="link-wrap">
+                <ul>
+                    <li><span>通用问题</span></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+    <div class="scroll-wrap" style="top:45px;">
+        <div class="m-pd-w">
+            <!--main-view start-->
+            <div class="main-view">
+
+
+                <div class="pd-b20">
+                    <table width="100%">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <a href="javascript:;" class="ic-btn orange style3 mg-r25" ng-click="showEditorAdd()">添加问题</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--table-view start-->
+                <div class="table-view">
+                    <!--<div class="table-nav">
+                        <a href="javascript:;" class="option cur">人员</a><a href="javascript:;" class="option">权限</a>
+                    </div>-->
+                    <div class="table-bar" style="border-radius:5px;">
+                        <div class="table-scroll">
+                            <table width="100%" class="tab-s1">
+                                <thead class="tab-hd-s1">
+                                <tr>
+                                    <th align="left" height="25">
+                                        <div class="max260 min80 pd-l30">序号</div>
+                                    </th>
+                                    <th align="left">
+                                        <div class="max260 min100">问题描述</div>
+                                    </th>
+                                    <th align="center">
+                                        <div class="max260 min100">状态</div>
+                                    </th>
+                                    <th align="center">
+                                        <div class="min100">操作</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="tr" ng-repeat="problem in problems">
+                                    <td align="left">
+                                        <div class="pd-l30">{{(curPage-1)*perPage+$index + 1}}</div>
+                                    </td>
+                                    <td align="left">{{problem.Problem}}</td>
+                                    <td align="center">{{problem.Status == 1?'激活':'停用'}}</td>
+                                    <td align="center">
+                                        <table width="100%">
+                                            <tbody>
+                                            <tr>
+                                                <td align="center">
+                                                    <a href="javascript:;" class="darkturquoise-c" ng-click="showEditorUpdate(problem)">
+                                                        <em class="fi-80 fs-20 mg-r5 v-a-m"></em>
+                                                        <span class="p-r" style="top:2px;">编辑</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tbody>
+                                <tr>
+                                    <td colspan="7" valign="top" class="bd-b0">
+                                        <div class="pd-b10 pd-r10">
+                                            <div class="g-page-box s-sty" style="text-align:right;">
+                                                <a class="pageBtn" ng-class="{disabled: curPage <= 1}"
+                                                   ng-click="toPage(1);">首页</a>
+                                                <a class="pageBtn" ng-class="{disabled: curPage <= 1}"
+                                                   ng-click="toPage(curPage-1)">上一页</a>
+                                                <a class="pageBtn" ng-class="{disabled: curPage >= totalPage}"
+                                                   ng-click="toPage(curPage+1);">下一页</a>
+                                                <a class="pageBtn" ng-class="{disabled: curPage >= totalPage}"
+                                                   ng-click="toPage(totalPage);">尾页</a>
+                                                    <span class="s-block">
+                                                        共 <label class="blue-c"> {{totalCount}} </label> 条 &nbsp;
+                                                        第 <label class="blue-c"> {{curPage}} </label> 页 / 共 <label
+                                                            class="blue-c"> {{totalPage}} </label> 页
+                                                    </span>
+                                                    <span class="s-block">
+                                                        到 <input class="jump-text" ng-model="goPage"
+                                                                 ng-blur="toPage(goPage);"> 页
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--table-view end-->
+
+
+                <!--编辑窗口 start-->
+                <div class="winStyle" id="editEquipment">
+                    <form name="edit_form" novalidate="">
+                        <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+                        <div class="win-hd binDrag">{{edit_title}}</div>
+                        <div class="win-m">
+                            <div class="win-pd-w">
+                                <table width="100%" class="tab-s3 p-table">
+                                    <tbody>
+                                    <tr>
+                                        <td align="right">问题描述：</td>
+                                        <td><input type="text" name="i_problem" class="text-style" ng-model="i_problem" placeholder="请输入问题" required="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">状态：</td>
+                                        <td><select ng-model="i_status" class="select"
+                                                    style="min-width:182px;border:1px solid #bfc9d4;">
+                                            <option value="1">激活</option>
+                                            <option value="0">停用</option>
+                                        </select></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="win-ft" style="padding-top:0;">
+                            <a href="javascript:;" ng-click="clickOK()" class="ic-btn orange mg-r5" ng-class="{disabled:edit_form.$invalid}">{{IsOK==1?'添加':'确定'}}</a>
+                            <a href="javascript:;" class="ic-btn mg-l5 close">{{IsOK==1?'关闭':'取消'}}</a>
+                        </div>
+                    </form>
+                </div>
+                <!--编辑窗口 end-->
+
+
+            </div>
+            <!--main-view end-->
+        </div>
+        <footer class="footer">
+            <p>技术支持：广州大洋信息技术有限公司 | <a href="#" target="_blank">Contact us</a></p>
+
+            <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+        </footer>
+    </div>
+
+    <br/>
+
+    <div class="clear"></div>
+</div>

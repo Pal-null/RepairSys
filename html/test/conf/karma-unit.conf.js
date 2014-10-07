@@ -13,13 +13,23 @@ module.exports = function(config) {
             'lib/angular/angular-animate.js',
             'lib/jquery-1.11.0.min.js',
             'lib/angular/angular-mocks.js',
+            'lib/global/binApp-1.0.js',
             'lib/global/*.js',
             'js/common/*.js',
-            //在这里添加源文件
-            'js/demo/router.js',//必须先引用router.js
-            'js/demo/*.js',
-            //在这里添加单元测试文件
-            'test/unit/demo/*.js'
+
+            /*****在这里添加测试 start*****/
+
+            //admin
+            'js/admin/router.js',
+            'js/admin/*.js',
+            'test/unit/admin/*.js',
+
+            //unitManager
+            "js/unitManager/router.js",
+            "js/unitManager/*.js",
+            'test/unit/unitMge/*.js'
+
+            /*****在这里添加测试 end*****/
         ],
         preprocessors: {
             'js/**/*.js': 'coverage'//需要测试覆盖率的js文件

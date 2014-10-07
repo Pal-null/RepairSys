@@ -1,0 +1,80 @@
+<!--main view-->
+<div class="frames-body">
+
+
+<!--左边菜单-->
+<div class="columns-of">
+    <div class="bread-crumbs">
+        <div class="link-wrap">
+            <ul>
+                <!--<li><a href="javascript:;">管理中心</a></li>
+                <li> &gt; </li>-->
+                <li><span>设备管理</span>
+                    <span> > <a href="#/unitDeviceProjectManager">查看项目</a></span>
+                    <span> > <a href="#/unitDeviceUnitManager/{{ProjectName}} {{UnitName}} {{No}} {{Prounit_id}}">查看单位设备</a></span>
+                    <span> > <a href="#/unitDeviceManager/{{T_id}} {{ProjectName}} {{UnitName}} {{No}} {{Prounit_id}}">查看设备属性</a></span>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="scroll-wrap" style="top:45px;">
+    <div class="details-c-w">
+        <h4 class="pd-b10"><strong>&nbsp;用户可见:</strong></h4>
+        <div ng-repeat="ds in Dps">
+            <div ng-if="ds.Can_visual==1">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ ds.Name }} {{ds.Value}} <br>
+            </div>
+        </div>
+        <!--
+        上市时间 2013年07月<br>
+        产品类型 家用<br>
+        产品定位 游戏影音本，家庭娱乐本<br>
+        操作系统 Linux<br>
+        主板芯片组 Intel HM87<br>
+        CPU系列 英特尔 酷睿i7 4代系列<br>
+        CPU型号 Intel 酷睿i7 4700MQ<br>
+        CPU主频 2.4GHz<br>
+        最高睿频 3400MHz<br>
+        总线规格 DMI 5 GT/s<br>
+          ------>
+        <div style="height:0;border-top:1px dashed #d0d0d0;margin:20px 0;"></div>
+
+        <h4 class="pd-b10"><strong>&nbsp;用户不可见:</strong></h4>
+        <div ng-repeat="ds in Dps">
+            <div ng-if="ds.Can_visual==0">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ds.Name }} {{ds.Value}} <br>
+            </div>
+        </div>
+        <!--三级缓存 6MB<br>
+        核心架构 Haswell<br>
+        核心/线程数 四核心/八线程<br>
+        制程工艺 22nm<br>
+        指令集 AVX2，64bit<br>
+        功耗 47W<br>
+        内存容量 8GB（4GB×2）<br>
+        内存类型 DDR3L（低电压版）1600MHz<br>
+        插槽数量 3xSO-DIMM<br>
+        最大内存容量 24GB<br>
+        硬盘容量 120GB+1TB<br--->
+    </div>
+    <div>
+        <footer class="footer">
+            <p>技术支持：广州大洋信息技术有限公司  |  <a href="#" target="_blank">Contact us</a></p>
+            <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+        </footer>
+    </div>
+</div>
+
+
+
+</div>
+
+<!--main view end-->

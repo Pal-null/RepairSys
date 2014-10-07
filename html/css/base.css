@@ -18,7 +18,7 @@ a{color:#606060; text-decoration:none;font-weight:400; font-style:normal; cursor
 a:hover{text-decoration:underline;color:#0095CE;}
 a:active{}
 input{outline:none;vertical-align:middle;outline:none;}
-select{vertical-align: middle; outline:none;}
+select{vertical-align: middle; outline:none;border:1px solid #bfc9d4;min-width:182px;}
 textarea{resize: none;outline:none;}
 a,button,input{-webkit-tap-highlight-color:transparent;}
 

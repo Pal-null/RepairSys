@@ -1,0 +1,125 @@
+<!--main view-->
+<div class="frames-body">
+
+<!--上边菜单-->
+<div class="columns-of">
+    <div class="bread-crumbs">
+        <div class="link-wrap">
+            <ul>
+                <!--<li><a href="javascript:;">管理中心</a></li>
+                <li> &gt; </li>-->
+                <li><span>设备管理</span>
+                    <span> > <a href="#/unitDeviceProjectManager">查看项目</a></span>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+<div class="scroll-wrap" style="top:45px;">
+
+<div class="m-pd-w">
+<!--main-view start-->
+<div class="main-view">
+
+<!---------------------------------项目管理---------------------------------->
+<div class="pd-b20">
+    <table width="100%">
+        <tbody><tr>
+            <td>
+                <a href="javascript:;" class="ic-btn orange style3 mg-r25">导入设备编号</a>
+                <a href="javascript:;" class="ic-btn orange style3 mg-r25">下载模板</a>
+            </td>
+        <tr><td colspan="2" height="20"></td></tr>
+        <tr>
+            <td>
+                <div class="search-bar">
+                    <span class="mg-r30">项目名称：<input type="text" ng-model="projectName" class="text"></span>
+                    <span class="mg-r30">项目单位：<input type="text" ng-model="unitName" class="text"></span>
+                    <span><button type="submit" class="search-btn" ng-click="Search(projectName,unitName)"> 搜索 </button></span>
+                </div>
+            </td>
+        </tr>
+        </tr>
+        </tbody></table>
+</div>
+
+<!--table-view start-->
+<div class="table-view">
+    <!--<div class="table-nav">
+        <a href="javascript:;" class="option cur">人员</a><a href="javascript:;" class="option">权限</a>
+    </div>-->
+    <div class="table-bar" style="border-radius:5px;">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr>
+                    <th align="center" height="25"><div class="max260 min80 pd-l0">项目名称</div></th>
+                    <th align="center"><div class="max260 min100">项目单位</div></th>
+                    <th align="center"><div class="max260 min100">设备编号</div></th>
+                    <th align="center"><div class="min100">操作</div></th>
+                </tr>
+                </thead>
+                <tbody>
+
+
+                <tr ng-repeat="user in users">
+                    <td align="center">{{user.Name}}</td>
+                    <td align="center">{{user.Uname}}</td>
+                    <td align="center">{{user.No}}</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tbody><tr>
+                                <td align="center"><a href="#/unitDeviceUnitManager/{{user.Name}} {{user.Uname}} {{user.No}} {{user.Prounit_id}}"  class="normal-c"><em class="fi-143 fs-16 mg-r5 v-a-m"></em>
+                                    <span class="p-r" style="top:2px;">查看设备</span></a></td>
+                            </tr>
+                            </tbody></table>
+                    </td>
+
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="7" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <span class="s-block"  style="text-align: center" ng-show="emptyListFlag"><h4><b>列表为空</b></h4></span>
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="pageBtn" ng-class="{disabled: curPage <= 1}" ng-click="toPage(1);">首页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPage <= 1}" ng-click="toPage(curPage-1)">上一页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPage >= totalPage}" ng-click="toPage(curPage+1);">下一页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPage >= totalPage}" ng-click="toPage(totalPage);">尾页</a>
+                                                    <span class="s-block">
+                                                        共 <label class="blue-c"> {{totalCount}} </label> 条 &nbsp;
+                                                        第 <label class="blue-c"> {{curPage}} </label> 页 / 共 <label class="blue-c"> {{totalPage}} </label> 页
+                                                    </span>
+                                                    <span class="s-block">
+                                                        到 <input class="jump-text" ng-model="goPage" ng-blur="toPage(goPage);"> 页
+                                                    </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--table-view end-->
+</div>
+<!--main-view end-->
+</div>
+<!----页脚---->
+<footer class="footer">
+    <p>技术支持：广州大洋信息技术有限公司  |  <a href="#" target="_blank">Contact us</a></p>
+    <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+</footer>
+</div>
+
+<br />
+<div class="clear"></div>
+</div>
+
+<!--main view end-->

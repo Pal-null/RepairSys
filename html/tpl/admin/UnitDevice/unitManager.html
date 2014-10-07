@@ -1,0 +1,203 @@
+<!--main view-->
+<div class="frames-body">
+
+
+<!--上边-->
+<div class="columns-of">
+    <div class="bread-crumbs">
+        <div class="link-wrap">
+            <ul>
+                <!--<li><a href="javascript:;">管理中心</a></li>
+                <li> &gt; </li>-->
+                <li><span>设备管理</span>
+                    <span> > <a href="#/unitDeviceProjectManager">查看项目</a></span>
+                    <span> > <a href="#/unitDeviceUnitManager/{{ProjectName}} {{UnitName}} {{No}} {{Prounit_id}}">查看单位设备</a></span>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+<div class="scroll-wrap" style="top:45px;">
+
+<div class="m-pd-w">
+<!--main-view start-->
+<div class="main-view">
+
+
+
+
+
+
+<!--table-view start------------设备管理--------------------------------------------------->
+
+
+<div class="pd-b20">
+    <table width="100%">
+        <tr>
+            <td>
+                <div class="search-bar">
+                    <span class="mg-r30">设备名称：<input type="text" class="text"  ng-model="projectName" ng-click="Search(projectName)"></span>
+                    <span><button type="submit" class="search-btn" ng-click="Search(projectName)"> 搜索 </button></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="table-view">
+    <div class="table-nav">
+        <a href="javascript:;" class="option cur">设备列表</a>
+    </div>
+    <div class="table-bar">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr>
+                    <th align="left" height="25"><div class="max260 min80 pd-l30">设备名称</div></th>
+                    <th align="center"><div class="max260 min100">保修期</div></th>
+                    <th align="center"><div class="max260 min100">报修起始时间</div></th>
+                    <th align="center"><div class="max260 min60">状态</div></th>
+                    <th align="center"><div class="min160">操作</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="device in unitDevices">
+                    <td align="left"><div class="pd-l30">{{ device.Name }}</div></td>
+                    <td align="center">{{ device.Warranty }}年</td>
+                    <td align="center">{{ device.Starttime|date:'yyyy-MM-dd hh:mm:ss a' }}</td>
+                    <td align="center">
+                        <div ng-if="device.Op_status==1">
+                            正常
+                        </div>
+                        <div ng-if="device.Op_status==0">
+                            删除
+                        </div>
+                    </td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"><a href="javascript:;" class="darkturquoise-c" onclick="binApp.window(binApp.getId('editEquipment'),{action:'scale',fixed:true},'normal') " ng-click="EditClick(device)"   ><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">编辑</span></a></td>
+                                <td align="center"><a href="#/unitDeviceManager/{{device.T_id}} {{ProjectName}} {{UnitName}} {{No}} {{Prounit_id}}" class="blue-c"><em class="fi-143 fs-16 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">详情</span></a></td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+                <!--tr class="tr">
+                    <td align="left"><div class="pd-l30">广州大学</div></td>
+                    <td align="center">1年</td>
+                    <td align="center">2014-07-25</td>
+                    <td align="center">正常</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"><a href="javascript:;" class="darkturquoise-c" onclick="binApp.window(binApp.getId('editEquipment'),{action:'scale',fixed:true},'normal')"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">编辑</span></a></td>
+                                <td align="center"><a href="#/unitDeviceManager" class="blue-c"><em class="fi-143 fs-16 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">详情</span></a></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr-->
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="5" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="prevPage pageBtn disabled">上一页</a>
+                                <a class="cur">1</a>
+                                <a href="javascript:;" class="">2</a>
+                                <a href="javascript:;">3</a>
+                                <font>...</font>
+                                <a href="javascript:;" class="nextPage pageBtn">下一页</a>
+                                <!--<span class="s-block">共 <label class="blue-c">4</label> 页</span>
+                                <span class="s-block">到第 <input type="text" name="" value="" class="jump-text"> 页</span>
+                                <a href="javascript:;">GO</a>-->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--table-view end-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--编辑设备窗口 start-->
+<div class="winStyle" id="editEquipment">
+    <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+    <div class="win-hd binDrag">编辑设备</div>
+    <div class="win-m">
+        <div class="win-pd-w">
+
+            <table width="100%" class="tab-s3 p-table">
+                <tbody>
+                <tr>
+                    <td align="right">项目：</td>
+                    <td><input type="text" class="text-style" ng-model="CProjectName" readonly=true></td>
+                </tr>
+                <tr>
+                    <td align="right">单位：</td>
+                    <td><input type="text" class="text-style" ng-model="CUnitName" readonly=true></td>
+                </tr>
+                <tr>
+                    <td align="right">设备：</td>
+                    <td><input type="text" class="text-style" ng-model="CDeviceName"></td>
+                </tr>
+                <tr>
+                    <td align="right">保修期：</td>
+                    <td><input type="number" class="text-style" min="0" step="1" ng-model="CWarranty" >年</td>
+                </tr>
+                <tr>
+                    <td align="right">状态：</td>
+                    <td><select class="select" style="min-width:182px;border:1px solid #bfc9d4;"  ng-model="COp_status">
+                        <option value="1">正常</option>
+                        <option value="0">删除</option>
+                    </select></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="win-ft" style="padding-top:0;">
+        <a href="javascript:;" ng-click="Click()" class="ic-btn orange mg-r5">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+    </div>
+</div>
+<!--编辑设备窗口 end-->
+
+
+
+
+</div>
+<!--main-view end-->
+</div>
+<!----页脚---->
+<footer class="footer">
+    <p>技术支持：广州大洋信息技术有限公司  |  <a href="#" target="_blank">Contact us</a></p>
+    <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+</footer>
+</div>
+
+<br />
+<div class="clear"></div>
+</div>
+<!--main view end-->

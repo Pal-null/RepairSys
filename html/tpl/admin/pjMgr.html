@@ -1,24 +1,706 @@
-<div class="frames-body">
+<div clas="frames-body">
 
-    <div class="columns-of">
-        <div class="bread-crumbs">
-            <div class="link-wrap">
-                <ul>
-                    <li><span>项目管理</span></li>
-                </ul>
-            </div>
-            <div class="clear"></div>
+<div class="columns-of">
+    <div class="bread-crumbs">
+        <div class="link-wrap">
+            <ul>
+                <li data-ng-repeat="ngt in ngts">
+                    <span><a ng-click="ngtClk(ngt.Id)">{{ngt.Ctx}}</a></span>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="scroll-wrap" style="top:45px;">
+<div class="m-pd-w">
+<!--main-view start-->
+<div class="main-view">
+<!--<div ng-include src="template.Url"></div>-->
+<!-- 项目管理 -->
+<div data-ng-show="showDiv=='pojList'">
+<!-- 项目管理 -->
+<div class="pd-b20">
+    <table width="100%">
+        <tr>
+        <tr>
+            <td>
+                <a href="javascript:;" ng-click="addPojInit()" class="ic-btn orange style3 mg-r25"
+                   onclick="binApp.window(binApp.getId('AddProject'),{action:'scale',fixed:true},'normal')">添加项目</a>
+            </td>
+        </tr>
+        </tr>
+    </table>
+</div>
+<!--table-view start-->
+<div class="table-view">
+    <div class="table-nav">
+        <div class="search-bar" style="float:right;margin-top:-5px;position:relative;">
+            <span class="mg-r30">项目编号：
+                <input type="text" class="text" data-ng-model="searchPojNum">
+            </span>
+            <span class="mg-r30">项目名：
+                <input type="text" class="text" data-ng-model="searchPojName">
+            </span>
+            <span>
+                <button type="submit" ng-click="findPojList()" class="search-btn">
+                    搜索
+                </button>
+            </span>
+        </div>
+        <a href="javascript:;" class="option cur">项目管理</a>
+    </div>
+    <div class="table-bar">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr>
+                    <th align="left" height="25">
+                        <div class="max260 min130 pd-l30">项目编号</div>
+                    </th>
+                    <th align="left">
+                        <div class="max260 min160">项目名称</div>
+                    </th>
+                    <th align="center">
+                        <div class="max260 min120">业务员</div>
+                    </th>
+                    <th align="center">
+                        <div class="min200">操作</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="tr" data-ng-repeat="poj in pojs">
+                    <td align="left">
+                        <div class="pd-l30">{{poj.Num}}</div>
+                    </td>
+                    <td align="left">{{poj.Name}}</td>
+                    <td align="center">
+                        <a href="javascript:;"
+                           class="darkturquoise-c">
+                            <em class="fi-80 fs-20 mg-r5 v-a-m"></em>
+                            <span class="p-r" style="top:2px;">{{poj.Salesman}}</span>
+                        </a>
+                    </td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center">
+                                    <a href="javascript:;"
+                                       class="normal-c"
+                                       ng-click="showUintList(poj)">
+                                        <em class="fi-143 fs-16 mg-r5 v-a-m"></em>
+                                            <span class="p-r" style="top:2px;">
+                                                查看单位
+                                            </span>
+                                    </a>
+                                </td>
+                                <td align="center">
+                                    <a href="javascript:;"
+                                       class="red-c"
+                                       ng-click="initProbForm(poj)"
+                                       onclick="binApp.window(binApp.getId('QList'),{action:'scale',fixed:true},'normal')">
+                                        <em class="fi-142 fs-16 mg-r5"></em>
+                                        问题列表
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="7" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <span class="s-block" style="text-align: center" ng-show="totalCountPoj==0"><h4><b>列表为空</b>
+                            </h4></span>
+
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="pageBtn" ng-class="{disabled: curPagePoj <= 1}"
+                                   ng-click="toPagePoj(1);">首页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPagePoj <= 1}"
+                                   ng-click="toPagePoj(curPagePoj-1)">上一页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPagePoj >= totalPagePoj}"
+                                   ng-click="toPagePoj(curPagePoj+1);">下一页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPagePoj >= totalPagePoj}"
+                                   ng-click="toPagePoj(totalPagePoj);">尾页</a>
+                                                    <span class="s-block">
+                                                        共 <label class="blue-c"> {{totalCountPoj}} </label> 条 &nbsp;
+                                                        第 <label class="blue-c"> {{curPagePoj}} </label> 页 / 共 <label
+                                                            class="blue-c"> {{totalPagePoj}} </label> 页
+                                                    </span>
+                                                    <span class="s-block">
+                                                        到 <input class="jump-text" ng-model="goPagePoj"
+                                                                 ng-blur="toPagePoj(goPagePoj);"> 页
+                                                    </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+<!--table-view end-->
 
-    <div class="scroll-wrap" style="top:45px;">
-        <div class="m-pd-w">
-            <!--main-view start-->
-            <div class="main-view">
-                Hello !!!
+<!--添加项目窗口 start-->
+<div class="winStyle add-people" id="AddProject">
+    <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+
+    <form name="addPojForm">
+        <div class="win-hd binDrag">
+            <span class="toggle-1">添加项目</span>
+        <span class="toggle-2"><a href="javascript:;"
+                                  onClick="binApp.removeClass(binApp.getId('AddProject'),'win-toggle');"><em
+                class="fi-4 fs-26 white-c v-a-m p-r mg-r10" style="top:-1px;"></em></a><font>添加业务员</font></span>
+        </div>
+        <div class="win-m">
+            <div class="win-pd-w">
+
+                <div class="ckb-list toggle-2">
+                    <ul>
+                        <li data-ng-repeat="salesman in salesmans" class="ckb-li cur">
+                            <label>
+                                <input type="checkbox"
+                                       name={{salesman.Id}}
+                                       id={{salesman.Id}}
+                                       ng-click="checkChgSM(salesman)"
+                                       class="mg-r5"/>
+                                {{salesman.Name}}
+                            </label>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <table width="100%" class="tab-s3 toggle-1">
+                    <tbody>
+                    <tr>
+                        <td align="right">编号：</td>
+                        <td><input type="text" class="text-style"
+                                   ng-pattern="pojNumFormat" required
+                                   ng-change="chkAddPojNum()"
+                                   name="nAddPojNum"
+                                   placeholder="请输入项目编号(6到12位数字)"
+                                   data-ng-model="addPojNum">
+                            <span data-ng-show="addPojForm.nAddPojNum.$error.pattern"
+                                  style="color: red">6到12位数字
+                            </span>
+                            <span data-ng-show="addPojNumRep==true"
+                                  style="color: red">项目编号重复
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">名称：</td>
+                        <td><input type="text" class="text-style"
+                                   placeholder="请输入项目名称" required
+                                   ng-change="chkAddPojName()"
+                                   data-ng-model="addPojName">
+                         <span data-ng-show="addPojNameRep==true"
+                               style="color: red">项目名重复
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">名称：</td>
+                        <td>
+                            <div class="permissions-list">
+                                <a data-ng-repeat="salesmanC in salesmanCs"
+                                   href="jvascript:;"
+                                   ng-click="removeSM(salesmanC)"
+                                   class="key cur">
+                                    {{salesmanC.Name}}<em>x</em>
+                                </a>
+                            </div>
+                            <div style="float:left;padding-top:4px;">
+                                <a href="javascript:;"
+                                   class="ic-btn style3"
+                                   onClick="binApp.addClass(binApp.getId('AddProject'),'win-toggle');">
+                                    添加业务员
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
             </div>
-            <!--main-view end-->
+        </div>
+        <!--disabled-->
+        <div class="win-ft toggle-1" style="padding-top:0;">
+            <a href="javascript:;"
+               class="ic-btn orange mg-r5 close"
+               ng-show="(!addPojForm.$invalid) && (addPojNumRep==false) && (addPojNameRep==false) && (salesmanCs.length!=0)"
+               ng-click="addPoj()">确认</a>
+            <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+        </div>
+        <div class="win-ft toggle-2" style="padding-top:0;">
+            <a href="javascript:;"
+               ng-show="(!addPojForm.$invalid) && (addPojNumRep==false) && (addPojNameRep==false)&& (salesmanCs.length!=0)"
+               class="ic-btn orange mg-r5"
+               onClick="binApp.removeClass(binApp.getId('AddProject'),'win-toggle');">确认</a>
+            <a href="javascript:;" class="ic-btn mg-l5"
+               onClick="binApp.removeClass(binApp.getId('AddProject'),'win-toggle');">返回</a>
+        </div>
+    </form>
+</div>
+<!--添加项目窗口 end-->
+<!--问题列表窗口 start-->
+<div class="winStyle assigned-e-win Q-List" id="QList">
+    <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+
+    <div class="win-hd binDrag">
+        <span class="toggle-1">{{probPojName}}</span>
+        <span class="toggle-2"><a href="javascript:;"
+                                  onClick="binApp.removeClass(binApp.getId('QList'),'win-toggle');"><em
+                class="fi-4 fs-26 white-c v-a-m p-r mg-r10" style="top:-1px;"></em></a><font>添加问题</font></span>
+    </div>
+    <div class="win-m">
+        <div class="win-pd-w">
+
+            <div class="full-textarea-w toggle-2">
+                <textarea class="full-textarea" style="height:271px;">{{addProbName}}</textarea>
+            </div>
+
+            <div class="list-w toggle-1">
+                <a href="javascript:;" class="next-btn fi-48"></a>
+                <a href="javascript:;" class="prev-btn fi-47"></a>
+
+                <div class="item" style="margin-right:38px;">
+                    <div class="pd-b10">已配置问题</div>
+                    <div class="m">
+                        <ul>
+                            <li class="option" data-ng-repeat="probPoj in probPojs">
+                                <a href="javascript:;" class="key"
+                                   ng-click="probClick(probPoj)">
+                                    <div class="text-of"><span class="no">{{$index + 1}}、</span>{{probPoj.Problem}}
+                                    </div>
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="pd-b10">可选问题</div>
+                    <div class="m">
+                        <ul>
+                            <li class="option" data-ng-repeat="probAll in probAlls">
+                                <a href="javascript:;" class="key"
+                                   ng-click="probClick(probAll)">
+                                    <div class="text-of"><span class="no">{{$index + 1}}、</span>{{probAll.Problem}}
+                                    </div>
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="clear:both;" class="pd-t15">
+                    <a href="javascript:;" class="ic-btn style3"
+                       ng-click="initAddProbName()"
+                       onClick="binApp.addClass(binApp.getId('QList'),'win-toggle');">
+                        添加问题</a>
+                </div>
+            </div>
+
         </div>
     </div>
+    <div class="win-ft toggle-1" style="padding-top:0;">
+        <a href="javascript:;" class="ic-btn orange mg-r5"
+                >确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+    </div>
+    <div class="win-ft toggle-2" style="padding-top:0;">
+        <a href="javascript:;" class="ic-btn orange mg-r5"
+           ng-click="addPojProb()"
+           onClick="binApp.removeClass(binApp.getId('QList'),'win-toggle');">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5"
+           onClick="binApp.removeClass(binApp.getId('QList'),'win-toggle');">返回</a>
+    </div>
+</div>
+<!--问题列表窗口 end-->
+</div>
+<!-- 单位管理 -->
+<div data-ng-show="showDiv=='unitList'">
+    <!-- 单位管理 -->
+    <div class="pd-b20">
+        <table width="100%">
+            <tr>
+            <tr>
+                <td>
+                    <a href="javascript:;" class="ic-btn orange style3 mg-r25">下载模板</a>
+                    <a href="javascript:;" class="ic-btn orange style3 mg-r25">单位导入</a>
+                    <a href="javascript:;" class="ic-btn orange style3 mg-r25"
+                       ng-click="initBandUnit()"
+                       onclick="binApp.window(binApp.getId('bindUnit'),{action:'scale',fixed:true},'normal')">绑定单位</a>
+                </td>
+            </tr>
+            </tr>
+        </table>
+    </div>
+    <!--table-view start-->
+    <div class="table-view">
+        <div class="table-nav">
+
+            <div class="search-bar" style="float:right;margin-top:-5px;position:relative;">
+                <span class="mg-r30">单位名：<input type="text" class="text" data-ng-model="findUnitName"></span>
+                <span><button type="submit" class="search-btn" ng-click="findUnit()"> 搜索</button></span>
+            </div>
+
+            <a href="javascript:;" class="option cur">单位列表</a>
+        </div>
+        <div class="table-bar">
+            <div class="table-scroll">
+                <table width="100%" class="tab-s1">
+                    <thead class="tab-hd-s1">
+                    <tr>
+                        <th align="left" height="25">
+                            <div class="max260 min100 pd-l30">项目编号</div>
+                        </th>
+                        <th align="left">
+                            <div class="max260 min130">项目名称</div>
+                        </th>
+                        <th align="left">
+                            <div class="max260 min130">项目单位</div>
+                        </th>
+                        <th align="center">
+                            <div class="min180">操作</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="tr" data-ng-repeat="pojUnit in pojUnits">
+                        <td align="left">
+                            <div class="pd-l30">{{pojUnit.Pnum}}</div>
+                        </td>
+                        <td align="left">{{pojUnit.Pname}}</td>
+                        <td align="left">{{pojUnit.Uname}}</td>
+                        <td align="center">
+                            <table width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <a href="javascript:;"
+                                           ng-click="delPojUnit(pojUnit)"
+                                           class="red-c">
+                                            <em class="fi-136 fs-20 mg-r5"></em>
+                                            <span class="p-r" style="top:-2px;">
+                                                删除
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td align="center">
+                                        <a href="javascript:;"
+                                           class="blue-c"
+                                           ng-click="showEqmList(pojUnit)">
+                                            <em class="fi-143 fs-16 mg-r5 v-a-m"></em>
+                                            <span class="p-r" style="top:2px;">
+                                                查看设备
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td colspan="7" valign="top" class="bd-b0">
+                            <div class="pd-b10 pd-r10">
+                                <span class="s-block" style="text-align: center" ng-show="totalCountUnit==0"><h4>
+                                    <b>列表为空</b></h4></span>
+
+                                <div class="g-page-box s-sty" style="text-align:right;">
+                                    <a class="pageBtn" ng-class="{disabled: curPageUnit <= 1}"
+                                       ng-click="toPageUnit(1);">首页</a>
+                                    <a class="pageBtn" ng-class="{disabled: curPageUnit <= 1}"
+                                       ng-click="toPageUnit(curPageUnit-1)">上一页</a>
+                                    <a class="pageBtn" ng-class="{disabled: curPageUnit >= totalPageUnit}"
+                                       ng-click="toPageUnit(curPageUnit+1);">下一页</a>
+                                    <a class="pageBtn" ng-class="{disabled: curPageUnit >= totalPageUnit}"
+                                       ng-click="toPageUnit(totalPageUnit);">尾页</a>
+                                                    <span class="s-block">
+                                                        共 <label class="blue-c"> {{totalCountUnit}} </label> 条 &nbsp;
+                                                        第 <label class="blue-c"> {{curPageUnit}} </label> 页 / 共 <label
+                                                            class="blue-c"> {{totalPageUnit}} </label> 页
+                                                    </span>
+                                                    <span class="s-block">
+                                                        到 <input class="jump-text" ng-model="goPageUnit"
+                                                                 ng-blur="toPageUnit(goPageUnit);"> 页
+                                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--table-view end-->
+    <!--绑定单位窗口 start-->
+    <div class="winStyle" id="bindUnit">
+        <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+
+        <div class="win-hd binDrag">
+            <span class="p-t">绑定单位</span>
+        </div>
+        <div class="win-m">
+            <div class="win-pd-w">
+
+                <table width="100%" class="tab-s3 p-table">
+                    <tr>
+                        <td align="left" width="75">项目编号：</td>
+                        <td align="left">{{curPoj.Num}}</td>
+                    </tr>
+                    <tr>
+                        <td align="left">项目名称：</td>
+                        <td align="left">{{curPoj.Name}}</td>
+                    </tr>
+                    <tr>
+                        <td align="left" colspan="2">
+                            <div class="pd-b5">可选项目单位：</div>
+                            <div class="ckb-list">
+                                <ul>
+                                    <li class="ckb-li cur" data-ng-repeat="bindUnit in bindUnits"><label>
+                                        <input type="checkbox" id={{'bind_'+bindUnit.T_id}}
+                                               ng-click="bindUnitClk(bindUnit)"
+                                               class="mg-r5">{{bindUnit.Name}}</label></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <div class="win-ft" style="padding-top:0;">
+            <a href="javascript:;"
+               ng-click="bindPojUnits()"
+               class="ic-btn orange mg-r5 close">确认</a>
+            <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+        </div>
+    </div>
+    <!--绑定单位窗口 end-->
+</div>
+<!-- 设备管理 -->
+<div data-ng-show="showDiv=='eqmList'">
+    <!-- 设备管理 -->
+    <div class="pd-b20">
+        <table width="100%">
+            <tr>
+            <tr>
+                <td>
+                    <div class="search-bar" style="float:right;margin-top:-5px;position:relative;">
+                        <span class="mg-r30">设备名：
+                            <input type="text" class="text" data-ng-model="findEmqName"></span>
+                        <span><button type="submit" ng-click="findEqm()" class="search-btn"> 搜索</button></span>
+                    </div>
+                </td>
+            </tr>
+            </tr>
+        </table>
+    </div>
+    <!--table-view start-->
+    <div class="table-view">
+        <div class="table-nav">
+            <a href="javascript:;" class="option cur">单位列表</a>
+        </div>
+        <div class="table-bar">
+            <div class="table-scroll">
+                <table width="100%" class="tab-s1">
+                    <thead class="tab-hd-s1">
+                    <tr>
+                        <th align="left" height="25">
+                            <div class="max260 min100 pd-l30">项目编号</div>
+                        </th>
+                        <th align="left">
+                            <div class="max260 min130">设备</div>
+                        </th>
+                        <th align="center">
+                            <div class="max260 min80">保修期</div>
+                        </th>
+                        <th align="center">
+                            <div class="max260 min80">报修起始时</div>
+                        </th>
+                        <th align="center">
+                            <div class="min130">操作</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="tr" data-ng-repeat="eqm in eqms">
+                        <td align="left">
+                            <div class="pd-l30">{{curPoj.Num}}</div>
+                        </td>
+                        <td align="left">{{eqm.Name}}</td>
+                        <td align="center">{{eqm.Warranty}}月</td>
+                        <td align="center">{{eqm.Starttime}}</td>
+                        <td align="center">
+                            <table width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <a href="javascript:;"
+                                           class="darkturquoise-c"
+                                           ng-click="initMdfEqmFunc(eqm)"
+                                           onclick="binApp.window(binApp.getId('editEquipment'),{action:'scale',fixed:true},'normal')">
+                                            <em class="fi-80 fs-20 mg-r5 v-a-m"></em>
+                                            <span class="p-r" style="top:2px;">
+                                                编辑
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td align="center">
+                                        <a href="javascript:;"
+                                           class="blue-c"
+                                           ng-click="showEqmDetails(eqm)">
+                                            <em class="fi-143 fs-16 mg-r5 v-a-m"></em>
+                                            <span class="p-r" style="top:2px;">
+                                                详情
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td colspan="7" valign="top" class="bd-b0">
+                            <div class="pd-b10 pd-r10">
+                                <span class="s-block" style="text-align: center" ng-show="totalCountEqm==0"><h4>
+                                    <b>列表为空</b></h4></span>
+
+                                <div class="g-page-box s-sty" style="text-align:right;">
+                                    <a class="pageBtn" ng-class="{disabled: curPageEqm <= 1}"
+                                       ng-click="toPageEqm(1);">首页</a>
+                                    <a class="pageBtn" ng-class="{disabled: curPageEqm <= 1}"
+                                       ng-click="toPageEqm(curPageEqm-1)">上一页</a>
+                                    <a class="pageBtn" ng-class="{disabled: curPageEqm >= totalPageEqm}"
+                                       ng-click="toPageEqm(curPageUnit+1);">下一页</a>
+                                    <a class="pageBtn" ng-class="{disabled: curPageEqm >= totalPageEqm}"
+                                       ng-click="toPageEqm(totalPageEqm);">尾页</a>
+                                                    <span class="s-block">
+                                                        共 <label class="blue-c"> {{totalCountEqm}} </label> 条 &nbsp;
+                                                        第 <label class="blue-c"> {{curPageEqm}} </label> 页 / 共 <label
+                                                            class="blue-c"> {{totalPageEqm}} </label> 页
+                                                    </span>
+                                                    <span class="s-block">
+                                                        到 <input class="jump-text" ng-model="goPageEqm"
+                                                                 ng-blur="toPageEqm(goPageEqm);"> 页
+                                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--table-view end-->
+    <!--编辑设备窗口 start-->
+    <div class="winStyle" id="editEquipment">
+        <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+        <form name="mdfEqmForm">
+        <div class="win-hd binDrag">编辑设备</div>
+        <div class="win-m">
+            <div class="win-pd-w">
+
+                <table width="100%" class="tab-s3 p-table">
+                    <tr>
+                        <td align="right">项目编号：</td>
+                        <td>{{curPoj.Num}}</td>
+                    </tr>
+                    <tr>
+                        <td align="right">项目：</td>
+                        <td>{{curPoj.Name}}</td>
+                    </tr>
+                    <tr>
+                        <td align="right">单位：</td>
+                        <td>{{curUnit.Uname}}</td>
+                    </tr>
+                    <tr>
+                        <td align="right">设备：</td>
+                        <td><input type="text"
+                                   class="text-style"
+                                   data-ng-model="mdfEqm.Name">
+                        <span data-ng-show="mdfEqm.Name==''"
+                              style="color: red">设备名不为空
+                            </span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td align="right">起始保修期：</td>
+                        <td><input type="text"
+                                   class="text-style"
+                                   ng-pattern="/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/"
+                                   name="nMdfStarttime"
+                                   data-ng-model="mdfEqm.Starttime">
+                            <span data-ng-show="mdfEqmForm.nMdfStarttime.$error.pattern"
+                                  style="color: red">日期格式(如：2006-01-02)
+                            </span>
+                            <span data-ng-show="mdfEqm.Starttime==''"
+                                  style="color: red">起始保修期不为空
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">保修期：</td>
+                        <td><input type="text"
+                                   class="text-style"
+                                   data-ng-model="mdfEqm.Warranty"
+                                   ng-pattern="/^(0|[1-9]\d*)$/"
+                                   name="nMdfWarranty"
+                                >月
+                            <span data-ng-show="mdfEqmForm.nMdfWarranty.$error.pattern"
+                                  style="color: red">大于等于0的整数
+                            </span>
+                            <span data-ng-show="mdfEqm.Warranty==''"
+                                  style="color: red">保修期不为空
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <div class="win-ft" style="padding-top:0;">
+            <a href="javascript:;" class="ic-btn orange mg-r5 close"
+               ng-show="!(mdfEqmForm.$invalid) && (mdfEqm.Name!='') && (mdfEqm.Starttime!='') && (mdfEqm.Warranty!='')"
+               ng-click="mdfEqmFunc()">确认</a>
+            <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+        </div>
+        </form>
+    </div>
+    <!--编辑设备窗口 end-->
+</div>
+<!-- 设备详情 -->
+<div data-ng-show="showDiv=='eqmDetails'">
+    <!-- 设备详情 -->
+    <div class="full-width">
+        <h4 class="pd-b10"><strong>设备编号：{{curEqm.No}}</strong></h4>
+
+        <p class="h4 pd-b10"><strong>设备详细信息：</strong></p>
+
+        <div class="details-c-w">
+            <div data-ng-repeat="eqmPpt in eqmPpts">
+                {{eqmPpt.Ppt_key}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{eqmPpt.Ppt_value}}<br>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--main-view end-->
+<footer class="footer">
+    <p>技术支持：广州大洋信息技术有限公司 | <a href="#" target="_blank">Contact us</a></p>
+
+    <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+</footer>
+</div>
+</div>
 
 </div>

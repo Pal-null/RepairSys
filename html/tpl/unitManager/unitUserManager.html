@@ -5,10 +5,6 @@
             <div class="bread-crumbs">
                 <div class="link-wrap">
                     <ul>
-                        <!--<li><a href="javascript:;">管理中心</a></li>
-                        <li> &gt; </li>
-                        <li><a href="javascript:;">店铺管理</a></li>
-                        <li> &gt; </li>-->
                         <li><span>人员管理</span></li>
                     </ul>
                 </div>
@@ -16,39 +12,37 @@
             </div>
         </div>
 
-
-
         <div class="scroll-wrap" style="top:45px;">
             <div class="m-pd-w">
                 <!--main-view start-->
                 <div class="main-view">
 
-
-
                     <div class="pd-b20">
                         <table width="100%">
                             <tr>
-                                <td>单位好：12345678</td>
+                                <td>单位：{{UnitName}}</td>
                                 <td>
                                     是否允许用户注册
-                                    <label class="mg-l20"><input type="radio" name="are-enrolment" /> 是</label>
-                                    <label class="mg-l20"><input type="radio" name="are-enrolment" /> 否</label>
+                                    <label class="mg-l20"><input type="radio" ng-checked ="rishnable == 1" name="are-enrolment" ng-click="registAble(1)" /> 是</label>
+
+                                    <label class="mg-l20"><input type="radio" ng-checked ="rishnable == 0" name="are-enrolment" ng-click="registAble(0)"/> 否</label>
                                 </td>
                             </tr>
                             <tr><td colspan="2" height="20"></td></tr>
                             <tr>
-                                <td><a href="javascript:;" class="ic-btn orange style2" onClick="binApp.window(binApp.getId('AddPeople'),{action:'scale',fixed:true},'normal')">添加</a></td>
+                                <td><a href="javascript:;" class="ic-btn orange style2" ng-click="addOrEdit(0)">添加</a></td>
                                 <td>
                                     <div class="search-bar">
-                                        <span class="mg-r30">所属项目：<input type="text" class="text" /></span>
-                            <span class="mg-r30">报修单状态：<select class="select">
-                                <option>请选择</option>
-                                <option value="1">普通硕士</option>
-                                <option value="2">本科国防生</option>
-                                <option value="3">硕士国防生</option>
+                                        <span class="mg-r30">手机号：<input type="text" class="text" data-ng-model="Phonesearch"/></span>
+                                        <span class="mg-r30">姓名：<input type="text" class="text" data-ng-model="Namesearch"/></span>
+                                        <span class="mg-r30">人员状态：<select class="select" data-ng-model="Statussearch" ng-change="getUsers(1)">
+                                        <option value="">请选择</option>
+                                        <option value="0">停用</option>
+                                        <option value="1">激活</option>
+
                             </select>
                             </span>
-                                        <span><button type="submit" class="search-btn"> 搜索 </button></span>
+                                        <span><button type="submit" class="ic-btn center search-btn" ng-click="getUsers(1)"> 搜索 </button></span>
                                     </div>
                                 </td>
                             </tr>
@@ -72,41 +66,16 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="tr">
-                                        <td align="left"><div class="pd-l30">13702712525</div></td>
-                                        <td align="left">张三</td>
-                                        <td align="left">激活</td>
+                                    <tr class="tr" data-ng-repeat="user in users">
+                                        <td align="left"><div class="pd-l30">{{user.Phone}}</div></td>
+                                        <td align="left">{{user.Name}}</td>
+                                        <td align="left"><t data-ng-show = "user.Status == 1">激活</t>
+                                            <t data-ng-show = "user.Status == 0">停用</t></td>
                                         <td align="center">
                                             <table width="100%">
                                                 <tr>
-                                                    <td align="center"><a href="javascript:;" class="blue-c"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">修改</span></a></td>
-                                                    <td align="center"><a href="javascript:;" class="red-c"><em class="fi-136 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">删除</span></a></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr class="tr">
-                                        <td align="left"><div class="pd-l30">13702712525</div></td>
-                                        <td align="left">张三</td>
-                                        <td align="left">激活</td>
-                                        <td align="center">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td align="center"><a href="javascript:;" class="blue-c"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">修改</span></a></td>
-                                                    <td align="center"><a href="javascript:;" class="red-c"><em class="fi-136 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">删除</span></a></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr class="tr">
-                                        <td align="left"><div class="pd-l30">13702712525</div></td>
-                                        <td align="left">张三</td>
-                                        <td align="left">激活</td>
-                                        <td align="center">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td align="center"><a href="javascript:;" class="blue-c"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">修改</span></a></td>
-                                                    <td align="center"><a href="javascript:;" class="red-c"><em class="fi-136 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">删除</span></a></td>
+                                                    <td align="center"><a class="blue-c" ng-click="addOrEdit(1,user)"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">修改</span></a></td>
+                                                    <td align="center"><a class="red-c" ng-click="addOrEdit(2,user)"><em class="fi-136 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">删除</span></a></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -116,16 +85,16 @@
                                     <tr>
                                         <td colspan="7" valign="top" class="bd-b0">
                                             <div class="pd-b10 pd-r10">
+                                                <span class="s-block"  style="text-align: center" data-ng-show="GradeEmpyt"><h4><b>列表为空</b></h4></span>
                                                 <div class="g-page-box s-sty" style="text-align:right;">
-                                                    <a class="prevPage pageBtn disabled">上一页</a>
-                                                    <a class="cur">1</a>
-                                                    <a href="javascript:;" class="">2</a>
-                                                    <a href="javascript:;">3</a>
-                                                    <font>...</font>
-                                                    <a href="javascript:;" class="nextPage pageBtn">下一页</a>
-                                                    <!--<span class="s-block">共 <label class="blue-c">4</label> 页</span>
-                                                    <span class="s-block">到第 <input type="text" name="" value="" class="jump-text"> 页</span>
-                                                    <a href="javascript:;">GO</a>-->
+                                                    <a class="prevPage pageBtn"ng-class="{disabled: curpage <= 1}" ng-click="GoToPage(1)">首页</a>
+                                                    <a class="prevPage pageBtn" ng-class ="{disabled: curpage <= 1}" ng-click="GoToPage(curpage-1)">上一页</a>
+                                                    <a  class="nextPage pageBtn"ng-class ="{disabled: curpage >= Sumpage}" ng-click="GoToPage(curpage+1)">下一页</a>
+                                                    <a class="prevPage pageBtn"ng-class ="{disabled: curpage >= Sumpage}" ng-click="GoToPage(Sumpage)">尾页</a>
+                                                    <span class="s-block">共 <label class="blue-c">{{SumRecord}}</label> 条</span>
+                                                    <span class="s-block">第 <label class="blue-c">{{curpage}}</label> 页/共 <label class="blue-c">{{Sumpage}}</label> 页</span>
+                                                    <span class="s-block">到第 <input type="text" data-ng-model="gotopage" class="jump-text" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" ng-blur="GoToPage(gotopage)"> 页</span>
+
                                                 </div>
                                             </div>
                                         </td>
@@ -141,32 +110,73 @@
 
 
 
-                    <!--添加人员窗口 start-->
-                    <div class="winStyle" id="AddPeople">
+                    <!--添加人员,修改人员，删除人员窗口 start-->
+                    <form class="winStyle" id="AddPeople" name="addFromTab">
                         <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
-                        <div class="win-hd binDrag">添加人员</div>
-                        <div class="win-m">
+                        <div class="win-hd binDrag" data-ng-show="fromStatus == 0">添加人员</div>
+                        <div class="win-hd binDrag" data-ng-show="fromStatus == 1">编辑人员</div>
+                        <div class="win-hd binDrag" data-ng-show="fromStatus == 2">删除人员</div>
+                        <div class="win-m" >
                             <div class="win-pd-w">
+                            <table width="100%" class="tab-s3" ng-model="addform">
+                                <tbody>
+                                <tr data-ng-show="fromStatus == 1 || fromStatus == 0">
+                                    <td valign="top" align="right">账号：</td>
+                                    <td valign="top" ><input ng-disabled="fromStatus == 1"  type="text" class="text-style" name="aAccount" required  data-ng-model="addform.Account" ng-readonly="fromStatus == 1" ng-blur="Accountcheck()" placeholder="请输入账号（6-12位数字" ng-pattern="/^[0-9]{6,12}$/"/>
+                                        <span style="color: red" ng-show="addFromTab.aAccount.$error.pattern"> 6-12位数字</span>
+                                        <span style="color: red" ng-show="AccountUserable == false && fromStatus == 0"> 账号重复</span>
+                                    </td>
+                                </tr >
 
-                                <div>
-                                    <ul>
-                                        <li class="pd-b10">　　手机号：<input type="text" class="text-style" /></li>
-                                        <li class="pd-b10">　　　姓名：<input type="text" class="text-style" /></li>
-                                    </ul>
-                                </div>
-
+                                <tr data-ng-show="fromStatus == 1 || fromStatus == 0">
+                                    <td valign="top" align="right">姓名：</td>
+                                    <td valign="top">
+                                        <input type="text" class="text-style" data-ng-model="addform.Name" name="aName" required  placeholder="请输入姓名（2-10汉字）" ng-blur="addCheck()" ng-pattern="/^[0-9\\u4e00-\u9fa5]{2,10}$/"/>
+                                       <span style="color: red" data-ng-show="addFromTab.aName.$error.pattern">2-10个汉字</span>
+                                    </td>
+                                </tr>
+                                <tr  data-ng-show="fromStatus == 1 || fromStatus == 0">
+                                    <td valign="top" align="right">手机号：</td>
+                                    <td valign="top">
+                                        <input type="text" class="text-style" data-ng-model="addform.PhoneNumber" required name="aPhone" placeholder="请输入手机号（11位数字）" ng-blur="addCheck()" ng-pattern="/^[0-9]{11}$/"/>
+                                       <span style="color: red" data-ng-show="addFromTab.aPhone.$error.pattern">11位</span>
+                                    </td>
+                                </tr>
+                                <tr  data-ng-show="fromStatus == 1 || fromStatus == 0">
+                                    <td valign="top" align="right">密码：</td>
+                                    <td valign="top">
+                                        (默认123456)
+                                    </td>
+                                </tr>
+                                <tr data-ng-show=" fromStatus == 1">
+                                    <td valign="top" align="right">状态：</td>
+                                    <td valign="top"><select class="select" style="min-width:182px;border:1px solid #bfc9d4;" data-ng-model="addform.status" >
+                                        <option value="" data-ng-show="fromStatus == 0">请选择</option>
+                                        <option value="0">停用</option>
+                                        <option value="1">激活</option>
+                                    </select></td>
+                                </tr>
+                                <tr valign="top" align="center" data-ng-show="fromStatus == 2">
+                                    <td>
+                                        确认删除报修员 {{delteName}}？
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                             </div>
                         </div>
                         <div class="win-ft">
-                            <a href="javascript:;" class="ic-btn orange mg-r5">确认</a>
-                            <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+                            <!--添加确认按钮-->
+                            <a class="ic-btn orange mg-r5 close" data-ng-show="fromStatus == 0" ng-click="addUsers()" ng-class="{disabled:addCheck() != 0 || AccountUserable != true}" >确认</a>
+                            <!--编辑确认按钮-->
+                            <a class="ic-btn orange mg-r5 close" data-ng-show="fromStatus == 1" ng-click="editUsers()" ng-class="{disabled:addCheck() != 0}">确认</a>
+                            <!--删除确认按钮-->
+                            <a class="ic-btn orange mg-r5 close" data-ng-show="fromStatus == 2" ng-click="DeleteUser()">确认</a>
+
+                            <a class="ic-btn mg-l5 close">取消</a>
                         </div>
-                    </div>
+                    </form>
                     <!--添加人员窗口 end-->
-
-
-
-
                 </div>
                 <!--main-view end-->
             </div>

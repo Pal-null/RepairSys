@@ -1,0 +1,139 @@
+<div class="frames-body">
+
+    <div class="columns-of">
+        <div class="bread-crumbs">
+            <div class="link-wrap">
+                <ul>
+                    <li><span>系统设置</span></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="scroll-wrap" style="top:45px;">
+        <div class="m-pd-w">
+            <!--main-view start-->
+            <div class="main-view">
+
+                <div class="pd-b15 bd-d-b mg-b15">
+                    <a href="javascript:;" class="ic-btn style4 mg-r25" onclick="binApp.window(binApp.getId('AddingUnit'),{action:'scale',fixed:true},'normal')"><i class="fi-59 mg-r5"></i>添加属性</a>
+                    <a href="javascript:;" class="ic-btn style4 mg-r25" ng-click="updateAttrs();"><i class="fi-105 mg-r5 orange-c"></i>保存</a>
+                </div>
+                <div class="pd-b15 pd-l15">
+                    <label class="mg-r30">
+                        <input type="checkbox" class="mg-r5" ng-click="selectAll();" data-ng-model="allCheck"/>
+                        <span class="v-a-m">全选</span>
+                    </label>
+                    <a href="javascript:;" class="ic-btn style3" ng-click="deleteAttrs();">批量删除</a>
+                </div>
+
+                <!--table-view start-->
+                <div class="table-view">
+                    <div class="table-bar">
+                        <div class="table-scroll">
+                            <table width="100%" class="tab-s1">
+                                <thead class="tab-hd-s1">
+                                <tr>
+                                    <th align="left" height="25"><div class="max300 min130" align="center">属性名称</div></th>
+                                    <th align="center"><div class="min120">默认可见</div></th>
+                                    <th align="center"><div class="min120">操作</div></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tr" data-ng-repeat="row in rows" ng-style="row.Flag"><!--background-color:#fbffb2;-->
+                                        <td align="left">
+                                            <div class="pd-l5">
+                                                <!--<span data-ng-show="row.Flag != null"class="orange-c">*</span>-->
+                                                <input type="checkbox" class="mg-r5" data-ng-model="row.Check"/>
+                                                <input type="text" class="text-style" style="padding:3px 6px;width:70%;" data-ng-model="row.Name" onchange="this.value = this.value.replace(/\s+/g, '');" ng-change="checkRowUpdate(row);"/>
+                                            </div>
+                                        </td>
+                                        <td align="center">
+                                            <a href="javascript:;" class="switch-ic-btn" ng-class="{'cur': row.Can_visual == 1}" ng-click="row.Can_visual = (row.Can_visual + 1) % 2; checkRowUpdate(row);" data-ng-model="row.Can_visual"><em></em></a>
+                                        </td>
+                                        <td align="center">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td align="center">
+                                                        <a href="javascript:;" class="red-c" ng-click="deleteAttrs(row);">
+                                                            <em class="fi-136  fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">删除</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="7" valign="top" class="bd-b0">
+                                            <div class="pd-b10 pd-r10">
+                                                <span class="s-block"  style="text-align: center" ng-show="emptyListFlag"><h4><b>列表为空</b></h4></span>
+                                                <div class="g-page-box s-sty" style="text-align:right;">
+                                                    <a class="pageBtn" ng-class="{disabled: curPage <= 1}" ng-click="toPage(1);">首页</a>
+                                                    <a class="pageBtn" ng-class="{disabled: curPage <= 1}" ng-click="toPage(curPage-1)">上一页</a>
+                                                    <a class="pageBtn" ng-class="{disabled: curPage >= totalPage}" ng-click="toPage(curPage+1);">下一页</a>
+                                                    <a class="pageBtn" ng-class="{disabled: curPage >= totalPage}" ng-click="toPage(totalPage);">尾页</a>
+                                                        <span class="s-block">
+                                                            共 <label class="blue-c"> {{totalCount}} </label> 条 &nbsp;
+                                                            第 <label class="blue-c"> {{curPage}} </label> 页 / 共 <label class="blue-c"> {{totalPage}} </label> 页
+                                                        </span>
+                                                        <span class="s-block">
+                                                            到 <input class="jump-text" ng-model="goPage" ng-blur="toPage(goPage);"> 页
+                                                        </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--table-view end-->
+
+                <!--添加单位窗口 start-->
+                <form class="winStyle" id="AddingUnit" name="addForm">
+                    <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+                    <div class="win-hd binDrag">添加属性</div>
+                    <div class="win-m">
+                        <div class="win-pd-w">
+                            <table width="100%" class="tab-s3" ng-model="addRow">
+                                <tbody>
+                                <tr>
+                                    <td align="right">属性名称：</td>
+                                    <td>
+                                        <input type="text" class="text-style" ng-model="addRow.Name" placeholder="请输入文字" name="aName" ng-required="aName != ''" onchange="this.value = this.value.replace(/\s+/g, '');">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">默认可见：</td>
+                                    <td>
+                                        <a href="javascript:;" class="switch-ic-btn" ng-class="{'cur': addRow.Can_visual == 1}" ng-click="addRow.Can_visual = (addRow.Can_visual + 1) % 2;" data-ng-model="addRow.Can_visual" name="aCan_visual" ng-required="aCan_visual != ''"><em></em></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="win-ft" style="padding-top:0;">
+                        <a ng-show="!addForm.$invalid" class="ic-btn orange mg-r5 close" ng-click="createAttr();">确认</a>
+                        <a ng-show="addForm.$invalid" class="ic-btn orange mg-r5 disabled">确认</a>
+                        <a ng-click="clearAddRow();" class="ic-btn mg-l5 close">取消</a>
+                    </div>
+                </form>
+                <!--添加单位窗口 end-->
+
+            </div>
+            <!--main-view end-->
+        </div>
+
+        <footer class="footer">
+            <p>技术支持：广州大洋信息技术有限公司  |  <a href="#" target="_blank">Contact us</a></p>
+            <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+        </footer>
+
+    </div>
+
+</div>

@@ -30,4 +30,27 @@ var adminApp = angular.module('adminApp', ['ngRoute'])
                 templateUrl: 'tpl/admin/unitMgr.html',
                 controller: 'unitMgrCtrl'
             })
+            .when('/prbMgr',{
+                templateUrl: 'tpl/admin/prbMgr.html',
+                controller: 'prbMgrCtrl'
+            })
+            .when('/sysMgr',{
+                templateUrl: 'tpl/admin/sysMgr.html',
+                controller: 'sysMgrCtrl'
+            })
+            .when('/unitDeviceProjectManager',{
+                templateUrl: 'tpl/admin/unitDevice/ProjectManager.html',
+                controller: 'devicesManageProjectCtrl'
+            })
+            .when('/unitDeviceUnitManager/:Name :Uname :No :Prounit_id',{
+                templateUrl: 'tpl/admin/unitDevice/unitManager.html',
+                controller :'devicesManageUnitDeviceCtrl'
+            })
+            .when('/unitDeviceManager/:T_id :Name :Uname :No :Prounit_id',{
+                templateUrl: 'tpl/admin/unitDevice/DeviceManager.html',
+                controller :'devicesManagePropertyCtrl'
+            })
+            .otherwise({
+                redirectTo: '/userMgr'
+            })
     }]);

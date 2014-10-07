@@ -1,24 +1,398 @@
 <div class="frames-body">
 
-    <div class="columns-of">
-        <div class="bread-crumbs">
-            <div class="link-wrap">
+<div class="columns-of">
+    <div class="bread-crumbs">
+        <div class="link-wrap">
+            <ul>
+                <li>人员管理</a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+<div class="scroll-wrap" style="top:45px;">
+<div class="m-pd-w">
+<!--main-view start-->
+<div class="main-view">
+
+<!--table-view start-->
+<div class="table-view">
+    <div class="table-nav">
+        <a href="javascript:;" class="option cur">人员</a><a href="javascript:;" class="option">权限</a>
+    </div>
+    <div class="table-bar">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr style="background:white;">
+                    <th align="left" colspan="6">
+                        <div style="padding:15px;">
+                            <a href="javascript:;" class="ic-btn orange style3 mg-r25" onclick="binApp.window(binApp.getId('fileform'),{action:'scale',fixed:true},'normal')">导入</a>
+                            <a href="javascript:;" class="ic-btn orange style3 mg-r25">下载模板</a>
+                            <a href="javascript:;" class="ic-btn orange style3 mg-r25" ng-click="getRoleList()" onclick="binApp.window(binApp.getId('AddPeople'),{action:'scale',fixed:true},'normal')">添加</a>
+                        </div>
+                        <div class="search-bar" style="padding:0 15px;">
+                            <span class="mg-r30">账号：<input type="text" class="text" ng-model="searchU.Account"></span>
+                            <span class="mg-r30">用户名：<input type="text" class="text" ng-model="searchU.Name"></span>
+                            <span class="mg-r30">角色：
+                                 <select ng-model="searchRole" ng-change="searchUser()" ng-options="role.Name for role in searchRoleList">
+                            <!--         <option value="">全部</option>-->
+                                 </select>
+                            </span>
+                            <span class="mg-r30">状态：<select class="select" ng-change="searchUser()" ng-model="searchU.Status">
+                                <option value="">全部</option>
+                                <option value="1">激活</option>
+                                <option value="0">停用</option>
+                            </select>
+                            </span>
+                            <span><button type="submit" class="search-btn" ng-click="searchUser()"> 搜索 </button></span>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th align="left" height="25"><div class="max260 min80 pd-l30">帐号</div></th>
+                    <th align="center"><div class="max260 min100">用户名</div></th>
+                    <th align="center"><div class="max260 min100">手机</div></th>
+                    <th align="left"><div class="max260 min120">角色</div></th>
+                    <th align="center"><div class="max260 min60">状态</div></th>
+                    <th align="center"><div class="min100">操作</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="tr" ng-repeat="user in users ">
+                    <td align="left"><div class="pd-l30">{{user.Account}}</div></td>
+                    <td align="center">{{user.Username}}</td>
+                    <td align="center">{{user.Phone}}</td>
+                    <td align="left">{{user.Rolename}}</td>
+                    <!--                            <td align="center">
+                                                    <div ng-show="user.Status == 1">激活</div>
+                                                    <div ng-show="user.Status == 0">停用</div>
+                                                </td>-->
+                    <td align="center">
+                        <div ng-if="user.Status == 1">激活</div>
+                        <div ng-if="user.Status == 0">停用</div>
+                    </td>
+                    <td align="center">
+                        <table width="100%">
+                            <tbody><tr>
+                                <td align="center"><a href="javascript:;" class="darkturquoise-c" ng-click="showEditInfo(user)" onclick="binApp.window(binApp.getId('EditPeople'),{action:'scale',fixed:true},'normal')"><em class="fi-80 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">编辑</span></a></td>
+                            </tr>
+                            </tbody></table>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="7" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="pageBtn" ng-class="{disabled: curPage <= 1}" ng-click="toPage(1);">首页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPage <= 1}" ng-click="toPage(curPage-1)">上一页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPage >= totalPage}" ng-click="toPage(curPage+1);">下一页</a>
+                                <a class="pageBtn" ng-class="{disabled: curPage >= totalPage}" ng-click="toPage(totalPage);">尾页</a>
+                                                    <span class="s-block">
+                                                        共 <label class="blue-c"> {{totalCount}} </label> 条 &nbsp;
+                                                        第 <label class="blue-c"> {{curPage}} </label> 页 / 共 <label class="blue-c"> {{totalPage}} </label> 页
+                                                    </span>
+                                                    <span class="s-block">
+                                                        到 <input class="jump-text" ng-model="goPage" ng-blur="toPage(goPage);"> 页
+                                                    </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--table-view end-->
+
+
+
+
+
+<!--<div style="border:dashed red;border-width:1px 0 1px 0;color:red;margin:20px 0;">以下是权限部分代码</div>-->
+<!--table-view start-->
+<!--<div class="table-view">
+    <div class="table-nav">
+        <a href="javascript:;" class="option">人员</a><a href="javascript:;" class="option cur">权限</a>
+    </div>
+    <div class="table-bar">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr style="background:white;">
+                    <th align="left" colspan="6">
+                        <div class="search-bar" style="padding:10px 15px 0;">
+                            <span class="mg-r30">权限：<input type="text" class="text"></span>
+                                            <span class="mg-r30">状态：<select class="select">
+                                                <option value="请选择">请选择</option>
+                                                <option value="1">激活</option>
+                                                <option value="2">停用</option>
+                                            </select>
+                                            </span>
+                            <span><button type="submit" class="search-btn"> 搜索 </button></span>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th align="left" height="25"><div class="max260 min80 pd-l30">序号</div></th>
+                    <th align="left"><div class="max260 min120">权限</div></th>
+                    <th align="center"><div class="max260 min60">状态</div></th>
+                    <th align="center"><div class="min100">操作</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">1</div></td>
+                    <td align="left">报修，分配，完结报修单</td>
+                    <td align="center">激活</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tbody><tr>
+                                <td align="center">
+                                    <a href="javascript:;" class="green-c" style="display:none;"><em class="fi-141 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">激活</span></a>
+                                    <a href="javascript:;" class="red-c"><em class="fi-140 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">停用</span></a>
+                                </td>
+                            </tr>
+                            </tbody></table>
+                    </td>
+                </tr>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">1</div></td>
+                    <td align="left">报修，分配，完结报修单</td>
+                    <td align="center">停用</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tbody><tr>
+                                <td align="center">
+                                    <a href="javascript:;" class="green-c"><em class="fi-141 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">激活</span></a>
+                                    <a href="javascript:;" class="red-c" style="display:none;"><em class="fi-140 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">停用</span></a>
+                                </td>
+                            </tr>
+                            </tbody></table>
+                    </td>
+                </tr>
+                <tr class="tr">
+                    <td align="left"><div class="pd-l30">1</div></td>
+                    <td align="left">报修，分配，完结报修单</td>
+                    <td align="center">激活</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tbody><tr>
+                                <td align="center">
+                                    <a href="javascript:;" class="green-c" style="display:none;"><em class="fi-141 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">激活</span></a>
+                                    <a href="javascript:;" class="red-c"><em class="fi-140 fs-20 mg-r5 v-a-m"></em><span class="p-r" style="top:2px;">停用</span></a>
+                                </td>
+                            </tr>
+                            </tbody></table>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="7" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="prevPage pageBtn disabled">上一页</a>
+                                <a class="cur">1</a>
+                                <a href="javascript:;" class="">2</a>
+                                <a href="javascript:;">3</a>
+                                <font>...</font>
+                                <a href="javascript:;" class="nextPage pageBtn">下一页</a>
+                                &lt;!&ndash;<span class="s-block">共 <label class="blue-c">4</label> 页</span>
+                                <span class="s-block">到第 <input type="text" name="" value="" class="jump-text"> 页</span>
+                                <a href="javascript:;">GO</a>&ndash;&gt;
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>-->
+<!--table-view end-->
+
+
+
+
+<!--添加人员窗口 start-->
+<div class="winStyle add-people" id="AddPeople">
+    <a href="javascript:;"  class="close-btn close" title="关闭"  ng-click="clearAddData()" ><em class="fi-53 fs-22"></em></a>
+    <div class="win-hd binDrag">
+        <span class="toggle-1">添加人员</span>
+        <span class="toggle-2"><a href="javascript:;"  onClick="binApp.removeClass(binApp.getId('AddPeople'),'win-toggle');"><em class="fi-4 fs-26 white-c v-a-m p-r mg-r10" style="top:-1px;"></em></a><font>添加权限</font></span>
+    </div>
+    <div class="win-m">
+        <div class="win-pd-w">
+
+            <div class="ckb-list toggle-2">
                 <ul>
-                    <li>人员管理</a></li>
+                    <li class="ckb-li"><label><input type="checkbox" name="p-ckb" class="mg-r5" />报修</label></li>
+                    <li class="ckb-li"><label><input type="checkbox" name="p-ckb" class="mg-r5" />统计分配</label></li>
+                    <li class="ckb-li"><label><input type="checkbox" name="p-ckb" class="mg-r5" />报修</label></li>
                 </ul>
             </div>
-            <div class="clear"></div>
+
+            <table width="100%" class="tab-s3 toggle-1">
+                <tbody>
+                <tr>
+                    <td align="right">用户名：</td>
+                    <td><input type="text" class="text-style" ng-model="addU.Name"></td>
+                </tr>
+                <tr>
+                    <td align="right">账号：</td>
+                    <td><input type="text" class="text-style" ng-model="addU.Account"></td>
+                </tr>
+
+                <tr>
+                    <td align="right">手机：</td>
+                    <td><input type="text" class="text-style" ng-model="addU.Phone"></td>
+                </tr>
+                <tr>
+                    <td align="right">角色：</td>
+                    <td>
+                        <select ng-model="selectRole" ng-options="role.Name for role in roleList"> </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">状态：</td>
+                    <td><select class="select" style="min-width:182px;border:1px solid #bfc9d4;" ng-model="addU.Status">
+                        <!--                            <option value="请选择">请选择</option>-->
+                        <option value="1">激活</option>
+                        <option value="0">停用</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td align="right">密码：</td>
+                    <td>(默认123456)</td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
+    <div class="win-ft toggle-1" style="padding-top:0;">
+        <a href="javascript:;" class="ic-btn orange mg-r5" ng-click="addUser()">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5 close" ng-click="clearAddData()">取消</a>
+    </div>
+    <div class="win-ft toggle-2" style="padding-top:0;">
+        <a href="javascript:;" class="ic-btn orange mg-r5" onClick="binApp.removeClass(binApp.getId('AddPeople'),'win-toggle');">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5" onClick="binApp.removeClass(binApp.getId('AddPeople'),'win-toggle');">返回</a>
+    </div>
+</div>
+<!--添加人员窗口 end-->
 
-    <div class="scroll-wrap" style="top:45px;">
-        <div class="m-pd-w">
-            <!--main-view start-->
-            <div class="main-view">
-                Hello !!!
+
+<!--编辑人员窗口 start-->
+<div class="winStyle add-people" id="EditPeople">
+    <a href="javascript:;"  class="close-btn close" title="关闭"  ><em class="fi-53 fs-22"></em></a>
+    <div class="win-hd binDrag">
+        <span class="toggle-1">编辑人员</span>
+        <span class="toggle-2"><a href="javascript:;"  onClick="binApp.removeClass(binApp.getId('EditPeople'),'win-toggle');"><em class="fi-4 fs-26 white-c v-a-m p-r mg-r10" style="top:-1px;"></em></a><font>添加权限</font></span>
+    </div>
+    <div class="win-m">
+        <div class="win-pd-w">
+
+            <table width="100%" class="tab-s3 toggle-1">
+                <tbody>
+                <tr>
+                    <td align="right">用户名：</td>
+                    <td><input type="text" class="text-style" ng-model="editU.Name"></td>
+                </tr>
+                <tr>
+                    <td align="right">手机：</td>
+                    <td><input type="text" class="text-style" ng-model="editU.Phone"></td>
+                </tr>
+                <tr>
+                    <td align="right">状态：</td>
+                    <td><select class="select" style="min-width:182px;border:1px solid #bfc9d4;" ng-model="editU.Status">
+                        <option value="1">激活</option>
+                        <option value="0">停用</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td align="right">密码：</td>
+
+                    <td>
+                        <input type="text" class="text-style"  ng-model="editU.Pwd" disabled>
+                        <a href="javascript:;" class="ic-btn mg-l5 " ng-click="resetPwd(true)" ng-if="editU.IsReset == 0">重置密码</a>
+                        <a href="javascript:;" class="ic-btn mg-l5 " ng-click="resetPwd(false)" ng-if="editU.IsReset == 1">取消重置</a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="win-ft toggle-1" style="padding-top:0;">
+        <a href="javascript:;" class="ic-btn orange mg-r5" ng-click="editUser()">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5 close" >取消</a>
+    </div>
+    <div class="win-ft toggle-2" style="padding-top:0;">
+        <a href="javascript:;" class="ic-btn orange mg-r5" onClick="binApp.removeClass(binApp.getId('EditPeople'),'win-toggle');">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5" onClick="binApp.removeClass(binApp.getId('EditPeople'),'win-toggle');">返回</a>
+    </div>
+</div>
+<!--编辑人员窗口 end-->
+
+<!--导入数据 start-->
+<form enctype="multipart/form-data" action="{{uploadaction}}" method="post" id="fileform" class="winStyle" style="width:500px;">
+    <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+    <div class="win-hd binDrag">导入数据</div>
+    <div class="win-m">
+        <div class="win-pd-w">
+            <div style="text-align:center;">
+                <label class="control-label"><span style="color: #ff0000">*</span>请选择文件</label>
+                <input type="text" id="filepath" readonly="readonly" style="width: 300px;height: 25px"/>
+                    <span class="sl-custom-file">
+                        <input type="button" value="浏览" />
+                        <input type="file" name="uploadFile" id="file"class="ui-input-file" onchange="document.getElementById('filepath').value =document.getElementById('file').value;"/>
+                    </span>
             </div>
-            <!--main-view end-->
         </div>
+        <div style="text-align:center;padding-top:10px;" id="showuploadprogressbar"><span  class="control-label">正在上传文件：&nbsp;</span><div style="width:60%;display:inline-block;vertical-align: middle;" id="uploadprogressbar"></div>&nbsp;&nbsp;{{uploadprocess}}</div>
+        <div style="text-align:center;padding-top:10px;" id="showinsertprogressbar"><span  class="control-label">正在导入数据：&nbsp;</span><div style="width:60%;display:inline-block;vertical-align: middle;" id="insertprogressbar"></div>&nbsp;&nbsp;{{insertprocess}}</div>
     </div>
+    <div class="win-ft" style="padding-top:20px;">
+        <a id="uploadExecl" class="ic-btn orange mg-r5">确认</a>
+        <a ng-click="reset();" class="ic-btn mg-l5 close">取消</a>
+    </div>
+</form>
+<!--导入数据 end-->
 
+</div>
+<!--main-view end-->
+</div>
+<footer class="footer">
+    <p>技术支持：广州大洋信息技术有限公司  |  <a href="#" target="_blank">Contact us</a></p>
+    <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+</footer>
+</div>
+<!--
+<div class="modal hide" id="upload">
+    <div class="modal-header">
+        <h3>文件上传</h3>
+    </div>
+    <div class="modal-body css-form control-group" align="center">
+        <form enctype="multipart/form-data" action="{{uploadaction}}" method="post" id="fileform">
+            <label class="control-label"><span style="color: #ff0000">*</span>请选择文件</label>
+            <input type="text" id="filepath" readonly="readonly" style="width: 300px;height: 25px"/>
+            <a href="javascript:;" class="input ic-btn orange style3 mg-r25" style="height: 20px">
+                浏览<input type="file" name="uploadFile" id="file" onchange="document.getElementById('filepath').value =
+                        document.getElementById('file').value;">
+            </a>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" id="uploadExecl">确定</button>
+        <button class="btn" data-dismiss="modal" ng-click="reset()">取消</button>
+    </div>
+</div>
+-->
 </div>

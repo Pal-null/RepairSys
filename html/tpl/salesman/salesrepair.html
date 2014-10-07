@@ -1,0 +1,285 @@
+
+<div class="frames-body">
+
+<div class="columns-of">
+    <div class="bread-crumbs">
+        <div class="link-wrap">
+            <ul>
+                <li><span>报修管理</span></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+<div class="scroll-wrap" style="top:45px;">
+<div class="m-pd-w">
+<!--main-view start-->
+<div class="main-view">
+
+<div class="pd-b20" ng-show="FormSH">
+    <table width="100%">
+        <tr>
+            <td><a href="javascript:;" class="ic-btn orange style2" ng-click="openWin()">报修</a></td>
+        </tr>
+        <tr><td colspan="2" height="20"></td></tr>
+        <tr>
+            <td>
+                <div class="search-bar">
+                    <span class="mg-r30">所属项目：<input type="text" class="text" ng-model="repairAgr.ProjectName"></input></span>
+                    <span><button type="submit" class="search-btn" ng-click="search()"> 搜索 </button></span>&nbsp
+                    <span><button type="submit" class="search-btn" ng-click="refresh()"> 刷新 </button></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!--table-view start-->
+<div class="table-view" ng-show="FormSH">
+    <div class="table-nav">
+        <a  ng-click="toDealing()" class="{{dealing}}">正在进行</a><a ng-click="toFinished()"class="{{finished}}">已完成</a><a ng-click="toClosed()" class="{{closed}}">已关闭</a>
+    </div>
+    <div class="table-bar">
+        <div class="table-scroll">
+            <table width="100%" class="tab-s1">
+                <thead class="tab-hd-s1">
+                <tr>
+                    <th align="left" height="25"><div class="max260 min80 pd-l30">时间</div></th>
+                    <th align="left"><div class="max260 min140">问题描述</div></th>
+                    <th align="left"><div class="max260 min80">所属项目</div></th>
+                    <th align="left"><div class="max260 min60">报修人</div></th>
+                    <th align="left"><div class="max260 min80">报修单状态</div></th>
+                    <th align="center"><div class="min180">操作</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="repairForm in repairForms">
+                    <td align="left"><div class="pd-l30">{{repairForm.Repair_time}}</div></td>
+                    <td align="left"><div class="max260">{{repairForm.Problem}}</div></td>
+                    <td align="left"><div class="max260">{{repairForm.Project_name}}</div></td>
+                    <td align="left">{{repairForm.Name}}</td>
+                    <td align="left">{{repairstatus}}</td>
+                    <td align="center">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"><a ng-click="getFormInfo(repairForm)" class="normal-c"><em class="fi-143 fs-16 mg-r5"></em>查看</a></td>
+                                <td align="center">
+                                    <a href="javascript:;" class="red-c"><em class="fi-43 fs-16 mg-r5"></em>投诉</a>
+                                </td>
+                                <td align="center">
+                                    <a href="javascript:;" class="green-c" onClick="binApp.window(binApp.getId('ConfirmWin'),{action:'scale',fixed:true},'normal')"><em class="fi-42 fs-16 mg-r5"></em>确认</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                <tr>
+                    <td colspan="7" valign="top" class="bd-b0">
+                        <div class="pd-b10 pd-r10">
+                            <div class="g-page-box s-sty" style="text-align:right;">
+                                <a class="pageBtn" ng-click="toFirstPage();">首页</a>
+                                <a class="pageBtn" ng-click="toPrePage()">上一页</a>
+                                <a class="pageBtn"  ng-click="toNextPage();">下一页</a>
+                                <a class="pageBtn"  ng-click="toLastPage();">尾页</a>
+                                                    <span class="s-block">
+                                                        共 <label class="blue-c"> {{total_row}} </label> 条 &nbsp;
+                                                        第 <label class="blue-c"> {{cur_page}} </label> 页 / 共 <label class="blue-c"> {{total_page}} </label> 页
+                                                    </span>
+                                                    <span class="s-block">
+                                                        到 <input class="jump-text" ng-model="goPage" ng-blur="nofocus();"> 页
+                                                    </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!--table-view end-->
+
+
+<!--<div style="border:dashed red;border-width:1px 0 1px 0;color:red;margin:20px 0;">以下是查看部分代码</div>-->
+
+
+<div class="full-width" ng-show="InfoSH">
+    <table width="100%" class="see-list">
+        <tr class="tr">
+            <td class="td-key" width="80"><strong>报修单号:</strong></td>
+            <td>{{repairFormsInfo[0].T_id}}</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>单位：</strong></td>
+            <td>{{repairFormsInfo[0].Unit_name}}</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>时间：</strong></td>
+            <td>{{repairFormsInfo[0].Repair_time}}</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>报修人：</strong></td>
+            <td>{{repairFormsInfo[0].Name}}</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>项目：</strong></td>
+            <td>{{repairFormsInfo[0].Project_name}}</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>报修设备：</strong></td>
+            <td>{{repairFormsInfo[0].Device_name}}</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>设备编号：</strong></td>
+            <td>{{repairFormsInfo[0].Device_no}}</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong class="coral-c">维修费用：</strong></td>
+            <td></td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>电话号码：</strong></td>
+            <td>{{repairFormsInfo[0].Phone}}</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>问题:</strong></td>
+            <td>无</td>
+        </tr>
+        <tr class="tr">
+            <td class="td-key"><strong>问题描述：</strong></td>
+            <td>{{repairFormsInfo[0].Problem}}</td>
+        </tr>
+    </table>
+    <br>
+    <div align="center"><span ><button  class="search-btn" ng-click="getFormInfo('')"> &nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp; </button></span></div>
+    <div class="pd-t10">
+        <div class="pd-t10 pd-b10 h4">消息跟踪：</div>
+        <table width="100%" class="tab-s2">
+            <thead>
+            <tr class="beige-tr">
+                <th width="160" align="left">时间</th>
+                <th align="left">内容</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>2014.07.25　16：00</td>
+                <td>您发布了一张新报修单</td>
+            </tr>
+            <tr>
+                <td>2014.07.26　16：36</td>
+                <td>分派员收到报修单并派出工程师前往。</td>
+            </tr>
+            <tr>
+                <td>2014.07.27　36：58</td>
+                <td>工程师到达现场并进行维修</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--确认窗口 start-->
+<div class="winStyle" id="ConfirmWin">
+    <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+    <div class="win-hd binDrag">评价确认</div>
+    <div class="win-m">
+        <div class="win-pd-w">
+
+            <div align="center">
+                <p class="h4">请为本次服务给予评价，谢谢!</p>
+                <div class="pd-t15">
+                    <span class="mg-r20"><label><input type="radio" name="e-conf-radio" checked /> 满意</label></span>
+                    <span><label><input type="radio" name="e-conf-radio" /> 一般</label></span>
+                    <span class="mg-l20"><label><input type="radio" name="e-conf-radio" /> 不满意</label></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="win-ft">
+        <a href="javascript:;" class="ic-btn orange mg-r5">确认</a>
+        <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+    </div>
+</div>
+<!--确认窗口 end-->
+
+
+<!--报修窗口 start-->
+<div class="winStyle repair-win" id="RepairWin">
+    <div class="binDrag" style="cursor:default;">
+        <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+        <div class="win-hd binDrag">报修</div>
+        <div class="win-m">
+            <div class="win-pd-w">
+
+                <div class="repair-form">
+                    <ul>
+                        <li class="part">联系人员：　<input type="text" class="text" data-ng-model="repairFormModel.name"/></li>
+                        <li class="part">联系电话：　<input type="text" class="text" data-ng-model="repairFormModel.tel"/></li>
+                        <li class="part">设备编号：　<input type="text" class="text" data-ng-model="repairFormModel.deviceId"/></li>
+                        <li class="part">
+                            <p class="pd-b5">问题类型：</p>
+                            <div class="Q-type cancelBubble">
+                                <ul>
+                                    <li data-ng-repeat="qu in repairFormModel.commQu track by $index">
+                                        <div class="text-of">
+                                            <label>
+                                                <input type="checkbox" class="mg-r5" ng-checked="repairFormModel.checkedCommQu.indexOf(qu) != -1" ng-click="toggleCommQuCheck(qu)" />
+                                                {{qu}}
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="part">
+                            <p class="pd-b5">自定义问题描述：</p>
+                            <div class="textarea-wrap">
+                                <textarea class="textarea" data-ng-model="repairFormModel.cusQu"></textarea>
+                            </div>
+                        </li>
+                        <li class="part">
+                            <a href="javascript:;" class="ic-btn style3 f-l" onClick="binApp.getId('RepairFileImg').click()">添加图片</a><input type="file" id="RepairFileImg" style="display:none;" />
+                            <div class="img-wrap">
+                                <ul>
+                                    <li class="img-box"><div class="m-pic"><img src="imgs/loading.gif" /></div></li>
+                                    <li class="img-box"><div class="m-pic" style="display:none;"><img src="" /></div></li>
+                                    <li class="img-box"><div class="m-pic" style="display:none;"><img src="" /></div></li>
+                                    <li class="img-box"><div class="m-pic" style="display:none;"><img src="" /></div></li>
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="win-ft">
+            <a href="javascript:;" class="ic-btn orange mg-r5" ng-click="createWorkOrder()">确认</a>
+            <a href="javascript:;" class="ic-btn mg-l5 close">取消</a>
+        </div>
+    </div>
+</div>
+<!--报修窗口 end-->
+
+
+
+
+</div>
+<!--main-view end-->
+</div>
+<footer class="footer">
+    <p>技术支持：广州大洋信息技术有限公司  |  <a href="#" target="_blank">Contact us</a></p>
+    <p>Copyright ©2014www.jxzy.com All Rights Reserved</p>
+</footer>
+</div>
+
+<br />
+<div class="clear"></div>
+</div>

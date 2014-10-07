@@ -1,48 +1,43 @@
 package common
 
+/**
+ * Created by Zf_D on 2014-10-04
+ */
 import (
-	"controllers/common"
-	"encoding/json"
-	"io/ioutil"
+	"config"
 	"net/http"
+	"net/http/httptest"
+	"github.com/astaxie/beego"
 )
 
 const (
-	localService string = "http://127.0.0.1:8186"
-	N            int    = 100 //测试次数
+	N int = 100 //压力测试次数
 )
 
-var client = http.Client{}
-var cookie *http.Cookie
+func init() {
+	config.Init()
+}
 
-//返回请求结果
-func GetTestResult(method string, action string, params map[string]string) common.ResultData {
-	action += "?"
-	for key, value := range params {
-		action += (key + "=" + value + "&")
-	}
-	request, _ := http.NewRequest(method, localService+"/"+action, nil)
-	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
-	request.Header.Set("Accept-Charset", "GBK,utf-8;q=0.7,*;q=0.3")
-	request.Header.Set("Accept-Encoding", "gzip,deflate,sdch")
-	request.Header.Set("Accept-Language", "zh-CN,zh;q=0.8")
-	request.Header.Set("Cache-Control", "max-age=0")
-	request.Header.Set("Connection", "keep-alive")
-	if cookie != nil {
-		request.AddCookie(cookie)
-	}
-	response, _ := client.Do(request)
-	if cookie == nil {
-		cookie = response.Cookies()[0]
-	}
-	result := common.ResultData{
-		IsSuccess: false,
-		Reason:    "",
-		Data:      nil,
-	}
-	if response.StatusCode == 200 {
-		body, _ := ioutil.ReadAll(response.Body)
-		json.Unmarshal([]byte(body), &result)
-	}
-	return result
+/**
+	测试前调用此函数
+ */
+func InitTest() {
+	//这是空函数，用来避免同一个包下多次初始化 config.Init()
+}
+
+/**
+	测试控制器的请求
+	@param arg_method {string} “POST” 或 “GET”
+	@param arg_action {string} 如 “/UnitMgrCtrl/GetUnits”
+	@param arg_ctrl {ControllerInterface} 如 UnitMgrCtrl
+ */
+func TestRouter(arg_method string, arg_action string, arg_ctrl beego.ControllerInterface) (code int) {
+	r, _ := http.NewRequest(arg_method, arg_action, nil)
+	w := httptest.NewRecorder()
+	handler := beego.NewControllerRegister()
+	handler.AddAuto(arg_ctrl)
+	beego.SessionOn = false
+	handler.ServeHTTP(w, r)
+	code =  w.Code
+	return
 }

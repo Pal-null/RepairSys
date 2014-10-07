@@ -65,6 +65,7 @@ func (this *DemoCtrl) UpdateDemo_Post() {
 
 // 搜索 - Get
 func (this *DemoCtrl) SearchDemo_Get() {
+	beego.Debug(123)
 	logger.Debug("SearchDemo")
 	// 声明返回前台的数据
 	// 处理获取数据事件
