@@ -53,7 +53,7 @@ adminApp.controller('sysMgrCtrl', ['$scope', '$http', function($scope, $http) {
                     //添加中间列，用于记录原数据
                     angular.forEach(data.Data["rows"], function(row, index) {
                         $scope.rows[index] = row;
-                        $scope.rows[index].Flag = null;
+                        $scope.rows[index].Flag = "";
                         $scope.rows[index].Check = false;
                         $scope.rows[index].tName = row.Name;
                         $scope.rows[index].tCan_visual = row.Can_visual;
@@ -87,16 +87,31 @@ adminApp.controller('sysMgrCtrl', ['$scope', '$http', function($scope, $http) {
     };
 
     $scope.updateAttrs = function() {
-//        $http.post("/SysMgrCtrl/UpdateAttrs", null).success(function(data) {
-//            if(data.IsSuccess) {
-//                showMsg("保存成功", "success", null);
-//                $scope.getAttrs();
-//            } else {
-//                showMsg(data.Reason, "error", null);
-//            }
-//        },"json").error(function() {
-//            actionError();
-//        });
+        var T_ids = [];
+        var Names = [];
+        var Can_visuals = [];
+        for(var i=0; i<$scope.rows.length; i++) {
+            if($scope.rows[i].Flag != "") {
+                T_ids.push($scope.rows[i].T_id);
+                Names.push($scope.rows[i].Name);
+                Can_visuals.push($scope.rows[i].Can_visual);
+            }
+        }
+        $scope.params = {
+            T_ids : T_ids.join("&"),
+            Names : Names.join("&"),
+            Can_visuals : Can_visuals.join("&")
+        };
+        $http.post("/SysMgrCtrl/UpdateAttrs", $scope.params).success(function(data) {
+            if(data.IsSuccess) {
+                showMsg("保存成功", "success", null);
+                $scope.getAttrs();
+            } else {
+                showMsg(data.Reason, "error", null);
+            }
+        },"json").error(function() {
+            actionError();
+        });
     };
 
     $scope.deleteAttrs = function(arg_row) {
@@ -122,15 +137,15 @@ adminApp.controller('sysMgrCtrl', ['$scope', '$http', function($scope, $http) {
     //多选
     $scope.selectAll = function() {
         $scope.allCheck = !$scope.allCheck;
-        for(var i in $scope.rows) {
+        for(var i=0; i<$scope.rows.length; i++) {
             $scope.rows[i].Check = $scope.allCheck;
         }
     };
 
     //检查总数据，有改动就提示保存
     $scope.checkAllUpdate = function() {
-        for(var i in $scope.rows) {
-            if($scope.rows[i].Flag != null) {
+        for(var i=0; i<$scope.rows.length; i++) {
+            if($scope.rows[i].Flag != "") {
                 showMsg("数据已被修改，是否保存？", "info", $scope.updateAttrs);
                 return false;
             }
@@ -143,7 +158,7 @@ adminApp.controller('sysMgrCtrl', ['$scope', '$http', function($scope, $http) {
         if(arg_row.Name != arg_row.tName || arg_row.Can_visual != arg_row.tCan_visual) {
             arg_row.Flag = {"background-color" : "#fbffb2;"};
         } else {
-            arg_row.Flag = null;
+            arg_row.Flag = "";
         }
     };
 

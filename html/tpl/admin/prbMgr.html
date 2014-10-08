@@ -24,6 +24,12 @@
                         <tr>
                             <td>
                                 <a href="javascript:;" class="ic-btn orange style3 mg-r25" ng-click="showEditorAdd()">添加问题</a>
+                                <span class="mg-r30">状态：
+                                     <select ng-model="searchStatus" ng-change="searchStatusChange()">
+                                     <option value="">全部</option>
+                                     <option value="1">激活</option>
+                                     <option value="0">停用</option>
+                                     </select></span>
                             </td>
                         </tr>
                         </tbody>
@@ -66,7 +72,8 @@
                                             <tbody>
                                             <tr>
                                                 <td align="center">
-                                                    <a href="javascript:;" class="darkturquoise-c" ng-click="showEditorUpdate(problem)">
+                                                    <a href="javascript:;" class="darkturquoise-c"
+                                                       ng-click="showEditorUpdate(problem)">
                                                         <em class="fi-80 fs-20 mg-r5 v-a-m"></em>
                                                         <span class="p-r" style="top:2px;">编辑</span>
                                                     </a>
@@ -81,6 +88,8 @@
                                 <tr>
                                     <td colspan="7" valign="top" class="bd-b0">
                                         <div class="pd-b10 pd-r10">
+                                             <span class="s-block" style="text-align: center" ng-show="totalCount==0"><h4>
+                                                 <b>列表为空</b></h4></span>
                                             <div class="g-page-box s-sty" style="text-align:right;">
                                                 <a class="pageBtn" ng-class="{disabled: curPage <= 1}"
                                                    ng-click="toPage(1);">首页</a>
@@ -115,6 +124,7 @@
                 <div class="winStyle" id="editEquipment">
                     <form name="edit_form" novalidate="">
                         <a href="javascript:;" class="close-btn close" title="关闭"><em class="fi-53 fs-22"></em></a>
+
                         <div class="win-hd binDrag">{{edit_title}}</div>
                         <div class="win-m">
                             <div class="win-pd-w">
@@ -122,7 +132,8 @@
                                     <tbody>
                                     <tr>
                                         <td align="right">问题描述：</td>
-                                        <td><input type="text" name="i_problem" class="text-style" ng-model="i_problem" placeholder="请输入问题" required="">
+                                        <td><input type="text" name="i_problem" class="text-style" ng-model="i_problem"
+                                                   placeholder="请输入问题" required="">
                                         </td>
                                     </tr>
                                     <tr>
@@ -138,7 +149,8 @@
                             </div>
                         </div>
                         <div class="win-ft" style="padding-top:0;">
-                            <a href="javascript:;" ng-click="clickOK()" class="ic-btn orange mg-r5" ng-class="{disabled:edit_form.$invalid}">{{IsOK==1?'添加':'确定'}}</a>
+                            <a href="javascript:;" ng-click="clickOK()" class="ic-btn orange mg-r5"
+                               ng-class="{disabled:edit_form.$invalid}">{{IsOK==1?'添加':'确定'}}</a>
                             <a href="javascript:;" class="ic-btn mg-l5 close">{{IsOK==1?'关闭':'取消'}}</a>
                         </div>
                     </form>

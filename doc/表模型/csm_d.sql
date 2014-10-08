@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50615
 File Encoding         : 65001
 
-Date: 2014-10-07 12:43:25
+Date: 2014-10-08 22:37:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `csm_complain` (
   `add2` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_21` (`repair_id`),
-  CONSTRAINT `fk_reference_21` FOREIGN KEY (`repair_id`) REFERENCES `csm_repairlist` (`t_id`)
+  CONSTRAINT `fk_reference_21` FOREIGN KEY (`repair_id`) REFERENCES `csm_repairlist` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='投诉表';
 
 -- ----------------------------
@@ -37,15 +37,17 @@ CREATE TABLE `csm_complain` (
 -- ----------------------------
 DROP TABLE IF EXISTS `csm_pictures`;
 CREATE TABLE `csm_pictures` (
-  `t_id` int(11) DEFAULT NULL,
-  `path` varchar(255) DEFAULT NULL,
-  `repair_id` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `op_status` int(255) NOT NULL DEFAULT '1' COMMENT '操作状态（0表示删除，1表示正常）',
+  `t_id` int(11) NOT NULL COMMENT '表ID',
+  `path` varchar(255) DEFAULT NULL COMMENT '图片路径',
+  `repair_id` int(11) DEFAULT NULL COMMENT '报修单id',
+  `name` varchar(255) DEFAULT NULL COMMENT '图片名称',
+  `op_status` int(11) NOT NULL DEFAULT '1' COMMENT '操作状态（0表示删除，1表示正常）',
   `op_time` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
-  KEY `list_id` (`repair_id`),
-  CONSTRAINT `csm_pictures_ibfk_1` FOREIGN KEY (`repair_id`) REFERENCES `csm_repairlist` (`t_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`t_id`),
+  UNIQUE KEY `index_path` (`path`),
+  KEY `csm_pictures_ibfk_1` (`repair_id`),
+  CONSTRAINT `csm_pictures_ibfk_1` FOREIGN KEY (`repair_id`) REFERENCES `csm_repairlist` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片表';
 
 -- ----------------------------
 -- Table structure for csm_problem
@@ -61,10 +63,8 @@ CREATE TABLE `csm_problem` (
   `op_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最终修改的时间',
   `add1` varchar(255) DEFAULT NULL,
   `add2` varchar(255) DEFAULT NULL,
-  `check` bigint(20) DEFAULT NULL,
-  `is_check` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=324 DEFAULT CHARSET=utf8 COMMENT='问题表';
+) ENGINE=InnoDB AUTO_INCREMENT=388 DEFAULT CHARSET=utf8 COMMENT='问题表';
 
 -- ----------------------------
 -- Table structure for csm_projects
@@ -72,14 +72,16 @@ CREATE TABLE `csm_problem` (
 DROP TABLE IF EXISTS `csm_projects`;
 CREATE TABLE `csm_projects` (
   `t_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '表id',
-  `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `name` varchar(255) DEFAULT NULL COMMENT '名称(唯一)',
   `no` varchar(255) DEFAULT NULL COMMENT '项目编号',
   `op_status` int(11) DEFAULT '1' COMMENT '操作状态(0表示删除，1表示正常)',
   `op_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最终修改时间',
   `add1` varchar(255) DEFAULT NULL,
   `add2` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='项目表';
+  PRIMARY KEY (`t_id`),
+  UNIQUE KEY `index_name` (`name`) COMMENT '项目名唯一',
+  UNIQUE KEY `index_no` (`no`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='项目表';
 
 -- ----------------------------
 -- Table structure for csm_property_key
@@ -93,8 +95,9 @@ CREATE TABLE `csm_property_key` (
   `op_time` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
   `add1` varchar(255) DEFAULT NULL,
   `add2` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='设备属性表';
+  PRIMARY KEY (`t_id`),
+  UNIQUE KEY `index_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COMMENT='设备属性表';
 
 -- ----------------------------
 -- Table structure for csm_property_value
@@ -113,9 +116,28 @@ CREATE TABLE `csm_property_value` (
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_22` (`pud_id`),
   KEY `fk_reference_23` (`key_id`),
-  CONSTRAINT `fk_reference_22` FOREIGN KEY (`pud_id`) REFERENCES `csm_pro_unit_devices` (`t_id`),
-  CONSTRAINT `fk_reference_23` FOREIGN KEY (`key_id`) REFERENCES `csm_property_key` (`t_id`)
+  CONSTRAINT `fk_reference_23` FOREIGN KEY (`key_id`) REFERENCES `csm_property_key` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_reference_22` FOREIGN KEY (`pud_id`) REFERENCES `csm_pro_unit_devices` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='设备信息表';
+
+-- ----------------------------
+-- Table structure for csm_pro_prb_ref
+-- ----------------------------
+DROP TABLE IF EXISTS `csm_pro_prb_ref`;
+CREATE TABLE `csm_pro_prb_ref` (
+  `t_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `pro_id` int(11) DEFAULT NULL COMMENT '项目id',
+  `prb_id` int(11) DEFAULT NULL COMMENT '问题id',
+  `op_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  `op_status` int(11) DEFAULT NULL COMMENT '操作状态',
+  `add1` varchar(255) DEFAULT NULL,
+  `add2` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`t_id`),
+  KEY `fk_reference_prb` (`prb_id`),
+  KEY `fk_reference_pro` (`pro_id`),
+  CONSTRAINT `fk_reference_pro` FOREIGN KEY (`pro_id`) REFERENCES `csm_projects` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_reference_prb` FOREIGN KEY (`prb_id`) REFERENCES `csm_problem` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='问题项目关系表';
 
 -- ----------------------------
 -- Table structure for csm_pro_sale_ref
@@ -132,9 +154,9 @@ CREATE TABLE `csm_pro_sale_ref` (
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_5` (`pro_id`),
   KEY `fk_reference_6` (`user_id`),
-  CONSTRAINT `fk_reference_5` FOREIGN KEY (`pro_id`) REFERENCES `csm_projects` (`t_id`),
-  CONSTRAINT `fk_reference_6` FOREIGN KEY (`user_id`) REFERENCES `csm_user` (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='项目_业务员关系表';
+  CONSTRAINT `fk_reference_6` FOREIGN KEY (`user_id`) REFERENCES `csm_user` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_reference_5` FOREIGN KEY (`pro_id`) REFERENCES `csm_projects` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='项目_业务员关系表';
 
 -- ----------------------------
 -- Table structure for csm_pro_unit_devices
@@ -152,9 +174,11 @@ CREATE TABLE `csm_pro_unit_devices` (
   `cdkey` varchar(255) DEFAULT NULL COMMENT '设备序列号',
   `add1` varchar(255) DEFAULT NULL,
   `add2` varchar(255) DEFAULT NULL,
+  `status` bigint(20) NOT NULL,
   PRIMARY KEY (`t_id`),
+  UNIQUE KEY `unique_no` (`no`) USING BTREE,
   KEY `fk_reference_14` (`prounit_id`),
-  CONSTRAINT `fk_reference_14` FOREIGN KEY (`prounit_id`) REFERENCES `csm_pro_unit_ref` (`t_id`)
+  CONSTRAINT `fk_reference_14` FOREIGN KEY (`prounit_id`) REFERENCES `csm_pro_unit_ref` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='项目单位—设备表';
 
 -- ----------------------------
@@ -172,9 +196,9 @@ CREATE TABLE `csm_pro_unit_ref` (
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_11` (`unit_id`),
   KEY `fk_reference_12` (`pro_id`),
-  CONSTRAINT `fk_reference_11` FOREIGN KEY (`unit_id`) REFERENCES `csm_units` (`t_id`),
-  CONSTRAINT `fk_reference_12` FOREIGN KEY (`pro_id`) REFERENCES `csm_projects` (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='项目_单位表关系表';
+  CONSTRAINT `fk_reference_12` FOREIGN KEY (`pro_id`) REFERENCES `csm_projects` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_reference_11` FOREIGN KEY (`unit_id`) REFERENCES `csm_units` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='项目_单位表关系表';
 
 -- ----------------------------
 -- Table structure for csm_repairlist
@@ -199,8 +223,8 @@ CREATE TABLE `csm_repairlist` (
   `add2` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`t_id`),
   KEY `user_id_fk` (`user_id`),
-  CONSTRAINT `user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `csm_user` (`t_id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COMMENT='报修单表';
+  CONSTRAINT `user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `csm_user` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='报修单表';
 
 -- ----------------------------
 -- Table structure for csm_repair_engineer_ref
@@ -219,8 +243,8 @@ CREATE TABLE `csm_repair_engineer_ref` (
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_17` (`repair_id`),
   KEY `fk_reference_18` (`engineer_id`),
-  CONSTRAINT `fk_reference_17` FOREIGN KEY (`repair_id`) REFERENCES `csm_repairlist` (`t_id`),
-  CONSTRAINT `fk_reference_18` FOREIGN KEY (`engineer_id`) REFERENCES `csm_user` (`t_id`)
+  CONSTRAINT `fk_reference_18` FOREIGN KEY (`engineer_id`) REFERENCES `csm_user` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_reference_17` FOREIGN KEY (`repair_id`) REFERENCES `csm_repairlist` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='报修单—工程师关系表';
 
 -- ----------------------------
@@ -238,9 +262,9 @@ CREATE TABLE `csm_repair_problem_ref` (
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_15` (`repair_id`),
   KEY `fk_reference_16` (`problem_id`),
-  CONSTRAINT `fk_reference_15` FOREIGN KEY (`repair_id`) REFERENCES `csm_repairlist` (`t_id`),
-  CONSTRAINT `fk_reference_16` FOREIGN KEY (`problem_id`) REFERENCES `csm_problem` (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='报修单_问题关系表';
+  CONSTRAINT `fk_reference_16` FOREIGN KEY (`problem_id`) REFERENCES `csm_problem` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_reference_15` FOREIGN KEY (`repair_id`) REFERENCES `csm_repairlist` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='报修单_问题关系表';
 
 -- ----------------------------
 -- Table structure for csm_role_permission
@@ -273,8 +297,8 @@ CREATE TABLE `csm_r_p_ref` (
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_2` (`r_id`),
   KEY `fk_reference_7` (`p_id`),
-  CONSTRAINT `fk_reference_2` FOREIGN KEY (`r_id`) REFERENCES `csm_role_permission` (`t_id`),
-  CONSTRAINT `fk_reference_7` FOREIGN KEY (`p_id`) REFERENCES `csm_role_permission` (`t_id`)
+  CONSTRAINT `fk_reference_7` FOREIGN KEY (`p_id`) REFERENCES `csm_role_permission` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_reference_2` FOREIGN KEY (`r_id`) REFERENCES `csm_role_permission` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='角色权限关系表';
 
 -- ----------------------------
@@ -292,7 +316,7 @@ CREATE TABLE `csm_schedule` (
   `add2` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_20` (`repair_engineer_id`),
-  CONSTRAINT `fk_reference_20` FOREIGN KEY (`repair_engineer_id`) REFERENCES `csm_repair_engineer_ref` (`t_id`)
+  CONSTRAINT `fk_reference_20` FOREIGN KEY (`repair_engineer_id`) REFERENCES `csm_repair_engineer_ref` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工程师进度表';
 
 -- ----------------------------
@@ -309,8 +333,9 @@ CREATE TABLE `csm_units` (
   `add1` varchar(255) DEFAULT NULL,
   `add2` varchar(255) DEFAULT NULL,
   `manager_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10119 DEFAULT CHARSET=utf8 COMMENT='单位表';
+  PRIMARY KEY (`t_id`),
+  UNIQUE KEY `index_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=10143 DEFAULT CHARSET=utf8 COMMENT='单位表';
 
 -- ----------------------------
 -- Table structure for csm_user
@@ -332,9 +357,9 @@ CREATE TABLE `csm_user` (
   PRIMARY KEY (`t_id`),
   KEY `fk_reference_24` (`unit_id`),
   KEY `fk_reference_9` (`role_id`),
-  CONSTRAINT `fk_reference_24` FOREIGN KEY (`unit_id`) REFERENCES `csm_units` (`t_id`),
-  CONSTRAINT `fk_reference_9` FOREIGN KEY (`role_id`) REFERENCES `csm_role_permission` (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6905 DEFAULT CHARSET=utf8 COMMENT='用户表';
+  CONSTRAINT `fk_reference_9` FOREIGN KEY (`role_id`) REFERENCES `csm_role_permission` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_reference_24` FOREIGN KEY (`unit_id`) REFERENCES `csm_units` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7023 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Table structure for user
@@ -356,7 +381,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_all_
 -- View structure for v_csm_devicesmanager_project
 -- ----------------------------
 DROP VIEW IF EXISTS `v_csm_devicesmanager_project`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_csm_devicesmanager_project` AS select distinct `a`.`name` AS `name`,`c`.`name` AS `uname`,`d`.`t_id` AS `prounit_id`,`d`.`no` AS `no` from (((`csm_projects` `a` join `csm_pro_unit_ref` `b`) join `csm_units` `c`) join `csm_pro_unit_devices` `d`) where ((`a`.`t_id` = `b`.`pro_id`) and (`b`.`pro_id` = `a`.`t_id`) and (`c`.`t_id` = `b`.`unit_id`) and (`d`.`prounit_id` = `b`.`t_id`)) order by `a`.`t_id` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_csm_devicesmanager_project` AS select distinct `a`.`name` AS `name`,`c`.`name` AS `uname`,`d`.`t_id` AS `prounit_id`,`d`.`no` AS `no` from (((`csm_projects` `a` join `csm_pro_unit_ref` `b`) join `csm_units` `c`) join `csm_pro_unit_devices` `d`) where ((`a`.`t_id` = `b`.`pro_id`) and (`b`.`pro_id` = `a`.`t_id`) and (`c`.`t_id` = `b`.`unit_id`) and (`d`.`prounit_id` = `b`.`t_id`) and (`a`.`op_status` = 1) and (`b`.`op_status` = 1) and (`c`.`op_status` = 1) and (`d`.`op_status` = 1)) order by `a`.`t_id` desc ;
 
 -- ----------------------------
 -- View structure for v_device_project_unit
@@ -369,6 +394,30 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_devi
 -- ----------------------------
 DROP VIEW IF EXISTS `v_device_property`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_device_property` AS select `v`.`t_id` AS `t_id`,`v`.`pud_id` AS `P_id`,`k`.`name` AS `name`,`v`.`value` AS `value`,`k`.`can_visual` AS `can_visual`,`d`.`no` AS `no` from ((`csm_property_key` `k` join `csm_property_value` `v`) join `csm_pro_unit_devices` `d`) where ((`v`.`key_id` = `k`.`t_id`) and (`v`.`pud_id` = `d`.`t_id`)) ;
+
+-- ----------------------------
+-- View structure for v_pojmgr_eqmppt
+-- ----------------------------
+DROP VIEW IF EXISTS `v_pojmgr_eqmppt`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_pojmgr_eqmppt` AS select `csm_property_key`.`t_id` AS `epk_id`,`csm_property_key`.`name` AS `ppt_key`,`csm_property_value`.`t_id` AS `epv_id`,`csm_property_value`.`value` AS `ppt_value`,`csm_property_value`.`op_time` AS `op_time`,`csm_property_value`.`pud_id` AS `pud_id` from ((`csm_property_key` join `csm_property_value`) join `csm_pro_unit_devices`) where ((`csm_property_key`.`op_status` = 1) and (`csm_property_value`.`op_status` = 1) and (`csm_pro_unit_devices`.`op_status` = 1) and (`csm_property_key`.`can_visual` = 1) and (`csm_property_value`.`key_id` = `csm_property_key`.`t_id`)) ;
+
+-- ----------------------------
+-- View structure for v_pojmgr_pojlist
+-- ----------------------------
+DROP VIEW IF EXISTS `v_pojmgr_pojlist`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_pojmgr_pojlist` AS select `csm_user`.`t_id` AS `userid`,`csm_projects`.`t_id` AS `proid`,`csm_pro_sale_ref`.`t_id` AS `puid`,group_concat(`csm_user`.`name` separator ',') AS `salesman`,`csm_projects`.`name` AS `name`,`csm_projects`.`no` AS `num`,`csm_projects`.`op_time` AS `poptime`,`csm_pro_sale_ref`.`op_time` AS `psoptime` from ((`csm_user` join `csm_projects`) join `csm_pro_sale_ref`) where ((`csm_user`.`t_id` = `csm_pro_sale_ref`.`user_id`) and (`csm_projects`.`t_id` = `csm_pro_sale_ref`.`pro_id`) and (`csm_projects`.`op_status` = 1) and (`csm_pro_sale_ref`.`op_status` = 1) and (`csm_user`.`role_id` = 8)) group by `csm_projects`.`t_id` ;
+
+-- ----------------------------
+-- View structure for v_pojmgr_pu
+-- ----------------------------
+DROP VIEW IF EXISTS `v_pojmgr_pu`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_pojmgr_pu` AS select `csm_pro_unit_ref`.`t_id` AS `puid`,`csm_projects`.`t_id` AS `pid`,`csm_projects`.`name` AS `pname`,`csm_projects`.`no` AS `pnum`,`csm_units`.`t_id` AS `uid`,`csm_units`.`name` AS `uname`,`csm_pro_unit_ref`.`op_time` AS `optime` from ((`csm_projects` join `csm_units`) join `csm_pro_unit_ref`) where ((`csm_projects`.`t_id` = `csm_pro_unit_ref`.`pro_id`) and (`csm_units`.`t_id` = `csm_pro_unit_ref`.`unit_id`) and (`csm_pro_unit_ref`.`op_status` = 1)) ;
+
+-- ----------------------------
+-- View structure for v_pojmgr_sm
+-- ----------------------------
+DROP VIEW IF EXISTS `v_pojmgr_sm`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`csm_d`@`%` SQL SECURITY DEFINER VIEW `v_pojmgr_sm` AS select `csm_user`.`t_id` AS `id`,`csm_user`.`name` AS `name` from `csm_user` where (`csm_user`.`role_id` = 8) ;
 
 -- ----------------------------
 -- View structure for v_repair_order

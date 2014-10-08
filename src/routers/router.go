@@ -48,7 +48,7 @@ func Init() {
 	//报修人员路由
 	beego.Router("/createWorkOrder", &repair.RepairCtrl{}, "post:CreateWorkOrder")
 	beego.Router("/getcommQu", &repair.RepairCtrl{}, "get:GetCommQu")
-	
+	beego.Router("/getProjectList", &repair.RepairCtrl{}, "get:GetProjectList")
 	//设备管理员路由
 	beego.Router("/getDeviceManagerProject",&DeviceManager.ProjectCtrl{},"get:GetViewProject")
 	beego.Router("/SearchDeviceMgrProjByBoth",&DeviceManager.ProjectCtrl{},"post:SearchProjectByBoth")

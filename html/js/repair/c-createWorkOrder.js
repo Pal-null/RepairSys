@@ -39,13 +39,13 @@ repairApp.controller('repiarManageCtrl', ['$scope', '$http', function ($scope, $
     };
     //打开报修窗口并初始化
     $scope.openWin = function () {
-        $scope.getCommQu();
         $scope.getProjectList();
+        $scope.getCommQu();
         binApp.window(binApp.getId('RepairWin'), {action: 'scale', fixed: true}, 'normal');
     };
     //获取通用问题列表
     $scope.getCommQu = function () {
-        $http.get("/getcommQu", null).success(function (data) {
+        $http.get("/getcommQu", {params: $scope.repairFormModel.checkedProject }).success(function (data) {
             if (data.IsSuccess) {
                 $scope.repairFormModel.commQu = data.Data;
             } else {
@@ -92,7 +92,7 @@ repairApp.controller('repiarManageCtrl', ['$scope', '$http', function ($scope, $
     };
     //项目选择列表
     $scope.getProjectList = function () {
-        $http.get("/getProjectList", null).success(function (data) {
+        $http.get("/getProjectList", {params: {userId: 1, unit: "广州大学"} }).success(function (data) {
             if (data.IsSuccess) {
                 $scope.repairFormModel.projects = data.Data;
             } else {
@@ -101,6 +101,10 @@ repairApp.controller('repiarManageCtrl', ['$scope', '$http', function ($scope, $
         }, "json").error(function () {
             binApp.alert('"服务器未响应,请检查您的网络连接"', {action: "top"});
         });
+//        $scope.repairFormModel.projects = [
+//            {"id": 1, "value": "阳光工程"},
+//            {"id": 2, "value": "哈哈"}
+//        ];
         $scope.repairFormModel.checkedProject = $scope.repairFormModel.projects[0];
     };
 

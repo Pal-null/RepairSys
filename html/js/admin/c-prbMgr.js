@@ -29,15 +29,18 @@ adminApp.controller('prbMgrCtrl', ['$scope', '$http', function ($scope, $http) {
 
     $scope.getProblems = function () {
         //发出请求
+//        console.log($scope.cur_page);
         $http.post("/getProblem", {
             curPage: $scope.curPage,
-            perPage: $scope.perPage
+            perPage: $scope.perPage,
+            searchStatus:$scope.searchStatus
         }).success(function (data) {
             if (data.IsSuccess) {
                 $scope.totalPage = data.Data["totalPage"];
                 $scope.totalCount = data.Data["totalCount"];
                 $scope.problems = data.Data["problems"];
                 $scope.PostResult = "success";
+                if($scope.totalCount==0)$scope.totalPage=1;
             } else {
                 if (!$scope.IsTest)binApp.alert(data.Reason, {action: "top"});
                 $scope.PostResult = "failure";
@@ -126,7 +129,7 @@ adminApp.controller('prbMgrCtrl', ['$scope', '$http', function ($scope, $http) {
         //标题
         $scope.edit_title = '添加问题';
         //按钮
-        $scope.IsOK = '1'
+        $scope.IsOK = '1';
         if (!$scope.IsTest)binApp.window(binApp.getId('editEquipment'), {action: 'scale', fixed: true}, 'normal');
     };
 
@@ -140,6 +143,12 @@ adminApp.controller('prbMgrCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.edit_title = '编辑';
         $scope.IsOK = '0';
         if (!$scope.IsTest)binApp.window(binApp.getId('editEquipment'), {action: 'scale', fixed: true}, 'normal');
+    };
+
+    //搜索栏状态改变
+    $scope.searchStatusChange = function(){
+        $scope.toPage(1);
+        $scope.getProblems();
     };
 
     $scope.getProblems();

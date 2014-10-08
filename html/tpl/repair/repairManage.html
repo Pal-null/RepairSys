@@ -252,7 +252,7 @@
                         <li class="part">设备编号：　<input type="text" class="text"
                                                       data-ng-model="repairFormModel.deviceId"/></li>
                         <li class="part">项目名称：　<select style="width:200px;height: 22px"
-                                                       ng-model="repairFormModel.checkedProject" ng-options="p.value for p in repairFormModel.projects">
+                                                       ng-model="repairFormModel.checkedProject" ng-options="p.value for p in repairFormModel.projects" ng-change="getCommQu()">
                                                        </select>
                         </li>
                         <li class="part">
